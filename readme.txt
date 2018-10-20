@@ -47,7 +47,6 @@ Source: http://flexslider.woothemes.com
 5. The images you uploaded should now be displayed in the post gallery.
 
 
-
 == Use the video post format
 
 1. Go to Admin > Posts > Add New.
