@@ -66,7 +66,7 @@ if ( ! function_exists( 'fukasawa_load_javascript_files' ) ) {
 	function fukasawa_load_javascript_files() {
 
 		if ( ! is_admin() ) {		
-			wp_register_script( 'fukasawa_flexslider', get_template_directory_uri() . '/js/flexslider.min.js', '', true );
+			wp_register_script( 'fukasawa_flexslider', get_template_directory_uri() . '/js/flexslider.js', '', true );
 
 			wp_enqueue_script( 'fukasawa_global', get_template_directory_uri() . '/js/global.js', array( 'jquery', 'masonry', 'fukasawa_flexslider' ), '', true );
 
@@ -89,9 +89,29 @@ if ( ! function_exists( 'fukasawa_load_style' ) ) {
 	function fukasawa_load_style() {
 
 		if ( ! is_admin() ) {
-			wp_register_style( 'fukasawa_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic' );
+
+			$dependencies = array();
+
+			/**
+			 * Translators: If there are characters in your language that are not
+			 * supported by the theme fonts, translate this to 'off'. Do not translate
+			 * into your own language.
+			 */
+			$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
+
+			if ( 'off' !== $google_fonts ) {
+
+				wp_register_style( 'fukasawa_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic' );
+
+				$dependencies[] = 'fukasawa_googleFonts';
+
+			}
+
 			wp_register_style( 'fukasawa_genericons', get_stylesheet_directory_uri() . '/genericons/genericons.css' );
-			wp_enqueue_style( 'fukasawa_style', get_stylesheet_uri(), array( 'fukasawa_googleFonts', 'fukasawa_genericons' ) );
+
+			$dependencies[] = 'fukasawa_genericons';
+
+			wp_enqueue_style( 'fukasawa_style', get_stylesheet_uri(), $dependencies );
 		}
 
 	}
@@ -110,9 +130,18 @@ if ( ! function_exists( 'fukasawa_add_editor_styles' ) ) {
 	function fukasawa_add_editor_styles() {
 
 		add_editor_style( 'fukasawa-editor-styles.css' );
-		$font_url = '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic';
-		
-		add_editor_style( str_replace( ',', '%2C', $font_url ) );
+
+		/**
+		 * Translators: If there are characters in your language that are not
+		 * supported by the theme fonts, translate this to 'off'. Do not translate
+		 * into your own language.
+		 */
+		$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
+
+		if ( 'off' !== $google_fonts ) {
+			$font_url = '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic';
+			add_editor_style( str_replace( ',', '%2C', $font_url ) );
+		}
 		
 	}
 	add_action( 'init', 'fukasawa_add_editor_styles' );
@@ -371,7 +400,6 @@ if ( ! function_exists( 'fukasawa_flexslider' ) ) {
 
 if ( ! function_exists( 'fukasawa_comment' ) ) {
 	function fukasawa_comment( $comment, $args, $depth ) {
-		$GLOBALS['comment'] = $comment;
 		switch ( $comment->comment_type ) :
 			case 'pingback' :
 			case 'trackback' :
@@ -517,56 +545,59 @@ class fukasawa_Customize {
    }
 
    public static function fukasawa_header_output() {
-      ?>
-      
-	      <!-- Customizer CSS --> 
+
+		echo '<!-- Customizer CSS -->';
+
+		echo '<style type="text/css">';
+			self::fukasawa_generate_css( 'body a', 'color', 'accent_color' );
+			self::fukasawa_generate_css( 'body a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.main-menu .current-menu-item:before', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.main-menu .current_page_item:before', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget-content .textwidget a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_fukasawa_recent_posts a:hover .title', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_fukasawa_recent_comments a:hover .title', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_archive li a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_categories li a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_meta li a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_nav_menu li a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_rss .widget-content ul a.rsswidget:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '#wp-calendar thead', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.widget_tag_cloud a:hover', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.search-button:hover .genericon', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.flex-direction-nav a:hover', 'background-color', 'accent_color' );
+			self::fukasawa_generate_css( 'a.post-quote:hover', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.posts .post-title a:hover', 'color', 'accent_color' );
+
+			self::fukasawa_generate_css( '.post-content a', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content a:hover', 'border-bottom-color', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content blockquote:before', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content fieldset legend', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content input[type="submit"]:hover', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content input[type="button"]:hover', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content input[type="reset"]:hover', 'background', 'accent_color' );
+
+			self::fukasawa_generate_css( '.post-content .has-accent-color', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.post-content .has-accent-background-color', 'background-color', 'accent_color' );
+
+			self::fukasawa_generate_css( '.page-links a:hover', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.comments .pingbacks li a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.comment-header h4 a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.bypostauthor.commet .comment-header:before', 'background', 'accent_color' );
+			self::fukasawa_generate_css( '.form-submit #submit:hover', 'background-color', 'accent_color' );
+
+			self::fukasawa_generate_css( '.nav-toggle.active', 'background-color', 'accent_color' );
+			self::fukasawa_generate_css( '.mobile-menu .current-menu-item:before', 'color', 'accent_color' );
+			self::fukasawa_generate_css( '.mobile-menu .current_page_item:before', 'color', 'accent_color' );
+
+			self::fukasawa_generate_css( 'body#tinymce.wp-editor a', 'color', 'accent_color' );
+			self::fukasawa_generate_css( 'body#tinymce.wp-editor a:hover', 'color', 'accent_color' );
+			self::fukasawa_generate_css( 'body#tinymce.wp-editor fieldset legend', 'background', 'accent_color' );
+			self::fukasawa_generate_css( 'body#tinymce.wp-editor blockquote:before', 'color', 'accent_color' );
+		echo '</style>';
+
+		echo '<!--/Customizer CSS-->';
 	      
-	      <style type="text/css">
-	           <?php self::fukasawa_generate_css('body a', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('body a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.main-menu .current-menu-item:before', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.main-menu .current_page_item:before', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget-content .textwidget a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_fukasawa_recent_posts a:hover .title', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_fukasawa_recent_comments a:hover .title', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_archive li a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_categories li a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_meta li a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_nav_menu li a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_rss .widget-content ul a.rsswidget:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('#wp-calendar thead', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.widget_tag_cloud a:hover', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.search-button:hover .genericon', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.flex-direction-nav a:hover', 'background-color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('a.post-quote:hover', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.posts .post-title a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content a', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content a:hover', 'border-bottom-color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content blockquote:before', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content fieldset legend', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content input[type="submit"]:hover', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content input[type="button"]:hover', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.post-content input[type="reset"]:hover', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.page-links a:hover', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.comments .pingbacks li a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.comment-header h4 a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.bypostauthor.commet .comment-header:before', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.form-submit #submit:hover', 'background-color', 'accent_color'); ?>
-	           
-	           <?php self::fukasawa_generate_css('.nav-toggle.active', 'background-color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.mobile-menu .current-menu-item:before', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('.mobile-menu .current_page_item:before', 'color', 'accent_color'); ?>
-	           
-	           <?php self::fukasawa_generate_css('body#tinymce.wp-editor a', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('body#tinymce.wp-editor a:hover', 'color', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('body#tinymce.wp-editor fieldset legend', 'background', 'accent_color'); ?>
-	           <?php self::fukasawa_generate_css('body#tinymce.wp-editor blockquote:before', 'color', 'accent_color'); ?>
-	      </style> 
-	      
-	      <!--/Customizer CSS-->
-	      
-      <?php
    }
    
    public static function fukasawa_live_preview() {
@@ -604,5 +635,128 @@ add_action( 'wp_head' , array( 'fukasawa_Customize' , 'fukasawa_header_output' )
 
 // Enqueue live preview javascript in Theme Customizer admin screen
 add_action( 'customize_preview_init' , array( 'fukasawa_Customize' , 'fukasawa_live_preview' ) );
+
+
+/* ---------------------------------------------------------------------------------------------
+   SPECIFY GUTENBERG SUPPORT
+------------------------------------------------------------------------------------------------ */
+
+
+if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
+
+	function fukasawa_add_gutenberg_features() {
+
+		/* Gutenberg Features --------------------------------------- */
+
+		add_theme_support( 'align-wide' );
+
+		/* Gutenberg Palette --------------------------------------- */
+
+		$accent_color = get_theme_mod( 'accent_color' ) ? get_theme_mod( 'accent_color' ) : '#928452';
+
+		add_theme_support( 'editor-color-palette', array(
+			array(
+				'name' 	=> _x( 'Accent', 'Name of the accent color in the Gutenberg palette', 'fukasawa' ),
+				'slug' 	=> 'accent',
+				'color' => $accent_color,
+			),
+			array(
+				'name' 	=> _x( 'Black', 'Name of the black color in the Gutenberg palette', 'fukasawa' ),
+				'slug' 	=> 'black',
+				'color' => '#333',
+			),
+			array(
+				'name' 	=> _x( 'Dark Gray', 'Name of the dark gray color in the Gutenberg palette', 'fukasawa' ),
+				'slug' 	=> 'dark-gray',
+				'color' => '#555',
+			),
+			array(
+				'name' 	=> _x( 'Medium Gray', 'Name of the medium gray color in the Gutenberg palette', 'fukasawa' ),
+				'slug' 	=> 'medium-gray',
+				'color' => '#777',
+			),
+			array(
+				'name' 	=> _x( 'Light Gray', 'Name of the light gray color in the Gutenberg palette', 'fukasawa' ),
+				'slug' 	=> 'light-gray',
+				'color' => '#999',
+			),
+			array(
+				'name' 	=> _x( 'White', 'Name of the white color in the Gutenberg palette', 'fukasawa' ),
+				'slug' 	=> 'white',
+				'color' => '#fff',
+			),
+		) );
+
+		/* Gutenberg Font Sizes --------------------------------------- */
+
+		add_theme_support( 'editor-font-sizes', array(
+			array(
+				'name' 		=> _x( 'Small', 'Name of the small font size in Gutenberg', 'fukasawa' ),
+				'shortName' => _x( 'S', 'Short name of the small font size in the Gutenberg editor.', 'fukasawa' ),
+				'size' 		=> 16,
+				'slug' 		=> 'small',
+			),
+			array(
+				'name' 		=> _x( 'Regular', 'Name of the regular font size in Gutenberg', 'fukasawa' ),
+				'shortName' => _x( 'M', 'Short name of the regular font size in the Gutenberg editor.', 'fukasawa' ),
+				'size' 		=> 18,
+				'slug' 		=> 'regular',
+			),
+			array(
+				'name' 		=> _x( 'Large', 'Name of the large font size in Gutenberg', 'fukasawa' ),
+				'shortName' => _x( 'L', 'Short name of the large font size in the Gutenberg editor.', 'fukasawa' ),
+				'size' 		=> 24,
+				'slug' 		=> 'large',
+			),
+			array(
+				'name' 		=> _x( 'Larger', 'Name of the larger font size in Gutenberg', 'fukasawa' ),
+				'shortName' => _x( 'XL', 'Short name of the larger font size in the Gutenberg editor.', 'fukasawa' ),
+				'size' 		=> 27,
+				'slug' 		=> 'larger',
+			),
+		) );
+
+	}
+	add_action( 'after_setup_theme', 'fukasawa_add_gutenberg_features' );
+
+endif;
+
+
+/* ---------------------------------------------------------------------------------------------
+   GUTENBERG EDITOR STYLES
+   --------------------------------------------------------------------------------------------- */
+
+
+if ( ! function_exists( 'fukasawa_block_editor_styles' ) ) :
+
+	function fukasawa_block_editor_styles() {
+
+		$dependencies = array();
+
+		/**
+		 * Translators: If there are characters in your language that are not
+		 * supported by the theme fonts, translate this to 'off'. Do not translate
+		 * into your own language.
+		 */
+		$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
+
+		if ( 'off' !== $google_fonts ) {
+
+			// Register Google Fonts
+			wp_register_style( 'fukasawa-block-editor-styles-font', '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic', false, 1.0, 'all' );
+			$dependencies[] = 'fukasawa-block-editor-styles-font';
+
+		}
+
+		wp_register_style( 'fukasawa-block-editor-styles-genericons', get_stylesheet_directory_uri() . '/genericons/genericons.css' );
+		$dependencies[] = 'fukasawa-block-editor-styles-genericons';
+
+		// Enqueue the editor styles
+		wp_enqueue_style( 'fukasawa-block-editor-styles', get_theme_file_uri( '/fukasawa-gutenberg-editor-style.css' ), $dependencies, '1.0', 'all' );
+
+	}
+	add_action( 'enqueue_block_editor_assets', 'fukasawa_block_editor_styles', 1 );
+
+endif;
 
 ?>

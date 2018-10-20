@@ -36,7 +36,7 @@
 				
 				if ( 1 < $wp_query->max_num_pages ) : ?>
 				
-					<span><?php printf( __( 'Page %s of %s', 'fukasawa' ), $paged, $wp_query->max_num_pages ); ?></span>
+					<span><?php printf( __( 'Page %1$s of %2$s', 'fukasawa' ), $paged, $wp_query->max_num_pages ); ?></span>
 					
 					<div class="clear"></div>
 				

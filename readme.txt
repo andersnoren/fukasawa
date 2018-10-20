@@ -59,6 +59,26 @@ Source: http://flexslider.woothemes.com
 
 == Changelog ==
 
+Version 1.14 (2018-10-20)
+-------------------------
+- Updated with Gutenberg support
+	- Gutenberg editor styles
+	- Styling of Gutenberg blocks
+	- Custom Fukasawa Gutenberg palette
+	- Custom Fukasawa Gutenberg typography styles
+- Added option to disable Google Fonts with a translateable string
+- Updated theme description
+- Improved compatibility with < PHP 5.5
+- Replaced minified flexslider with non-minified version
+- Removed imagesloaded.pkgd.js, since a) it's bundled with WordPress, and b) it wasn't being used anyway
+- Fixed the archive template date output
+- Removed the languages sub folder, since that is handled by WordPress.org
+- Set flexslider to a fixed height, so it doesn't break the Masonry layout on archive pages
+
+Version 1.13 (2018-05-24)
+-------------------------
+- Fixed output of cookie checkbox in comments
+
 Version 1.12 (2017-12-03)
 -------------------------
 - Replaced ternany shorthands will full-length version, to retain support for PHP pre 5.3 

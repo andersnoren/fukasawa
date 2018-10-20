@@ -20,11 +20,15 @@
 				
 				</div><!-- .post-header -->
 				
-				<?php if ( ! empty( get_post( get_post_thumbnail_id() )->post_excerpt ) ) : ?>
+				<?php 
+
+				$image_caption = get_post( get_post_thumbnail_id() )->post_excerpt;
+				
+				if ( $image_caption ) : ?>
 													
 					<div class="post-content section-inner thin">
 					
-						<p><?php echo get_post( get_post_thumbnail_id() )->post_excerpt; ?></p>
+						<p><?php echo $image_caption; ?></p>
 						
 					</div>
 					

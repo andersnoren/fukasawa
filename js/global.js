@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
     $(".flexslider").flexslider({
         animation: "slide",
         controlNav: false,
-        smoothHeight: true,
+        smoothHeight: false,
         start: $blocks.masonry(),
     });
 

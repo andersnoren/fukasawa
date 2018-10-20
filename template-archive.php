@@ -42,7 +42,7 @@ get_header(); ?>
 							<li>
 								<a href="<?php echo get_the_permalink( $archive_post->ID ); ?>" title="<?php the_title_attribute( array( 'post' => $archive_post->ID ) ); ?>">
 									<?php echo get_the_title( $archive_post->ID );?> 
-									<span><?php the_time( get_option( 'date_format' ), $archive_post->ID ); ?></span>
+									<span><?php echo get_the_time( get_option( 'date_format' ), $archive_post->ID ); ?></span>
 								</a>
 							</li>
 						<?php endforeach; ?>

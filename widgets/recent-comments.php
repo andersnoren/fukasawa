@@ -50,7 +50,7 @@ class fukasawa_recent_comments extends WP_Widget {
 						
 							<li>
 								
-								<a href="<?php echo get_permalink( $comment->comment_post_ID ); ?>#comment-<?php echo $comment->comment_ID; ?>" title="<?php printf( __( 'Comment to %s, posted %s', 'fukasawa' ),  get_the_title( $comment->comment_post_ID ), get_the_time( get_option( 'date_format' ) ) ); ?>">
+								<a href="<?php echo get_permalink( $comment->comment_post_ID ); ?>#comment-<?php echo $comment->comment_ID; ?>" title="<?php printf( __( 'Comment to %1$s, posted %2$s', 'fukasawa' ),  get_the_title( $comment->comment_post_ID ), get_the_time( get_option( 'date_format' ) ) ); ?>">
 									
 									<div class="post-icon">
 									
