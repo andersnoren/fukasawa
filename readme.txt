@@ -58,6 +58,11 @@ Source: http://flexslider.woothemes.com
 
 == Changelog ==
 
+Version 1.15 (2018-10-20)
+-------------------------
+- Fixed the accent color not being updated
+- Fixed issue with items misalignment in the gallery block
+
 Version 1.14 (2018-10-20)
 -------------------------
 - Updated with Gutenberg support

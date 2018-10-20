@@ -652,7 +652,7 @@ if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
 
 		/* Gutenberg Palette --------------------------------------- */
 
-		$accent_color = get_theme_mod( 'accent_color' ) ? get_theme_mod( 'accent_color' ) : '#928452';
+		$accent_color = get_theme_mod( 'accent_color' ) ? get_theme_mod( 'accent_color' ) : '#019EBD';
 
 		add_theme_support( 'editor-color-palette', array(
 			array(
