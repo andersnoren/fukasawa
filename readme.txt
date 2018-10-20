@@ -58,6 +58,10 @@ Source: http://flexslider.woothemes.com
 
 == Changelog ==
 
+Version 1.16 (2018-10-20)
+-------------------------
+- Updated theme description
+
 Version 1.15 (2018-10-20)
 -------------------------
 - Fixed the accent color not being updated
