@@ -1,23 +1,27 @@
 jQuery(document).ready(function($) {
 	
 	
-	//Masonry blocks
-	$blocks = $(".posts");
+	$masonryWrapper = $( '.posts' );
 
-	$blocks.imagesLoaded(function(){
-		$blocks.masonry({
-			itemSelector: '.post-container'
-		});
+	if ( $masonryWrapper.length ) {
 
-		// Fade blocks in after images are ready (prevents jumping and re-rendering)
-		$(".post-container").fadeIn();
-	});
-	
-	$(document).ready( function() { setTimeout( function() { $blocks.masonry(); }, 500); });
+		$grid = $masonryWrapper.imagesLoaded( function() {
 
-	$(window).resize(function () {
-		$blocks.masonry();
-	});
+			$grid = $masonryWrapper.masonry( {
+				columnWidth: 		'.grid-sizer',
+				itemSelector: 		'.post-container',
+				percentPosition: 	true,
+				stagger: 			0,
+				transitionDuration: 0,
+			} );
+
+		} );
+
+		$grid.on( 'layoutComplete', function() {
+			$( '.posts' ).css( 'opacity', 1 );
+		} );
+
+	}
 
 
 	// Toggle navigation
@@ -41,7 +45,9 @@ jQuery(document).ready(function($) {
         animation: "slide",
         controlNav: false,
         smoothHeight: false,
-        start: $blocks.masonry(),
+        start: function(){
+			$masonryWrapper.masonry();
+		},
     });
 
         			
@@ -78,8 +84,8 @@ jQuery(document).ready(function($) {
 		var $container = $('.posts');
 		$container.masonry( 'reloadItems' );
 		
-		$blocks.imagesLoaded(function(){
-			$blocks.masonry({
+		$masonryWrapper.imagesLoaded(function(){
+			$masonryWrapper.masonry({
 				itemSelector: '.post-container'
 			});
 	
@@ -101,7 +107,11 @@ jQuery(document).ready(function($) {
 	        smoothHeight: true   
 	    });
 		
-		$(document).ready( function() { setTimeout( function() { $blocks.masonry(); }, 500); });
+		$(document).ready( function() { 
+			setTimeout( function() { 
+				$masonryWrapper.masonry(); 
+			}, 500);
+		});
 
 	});
 	

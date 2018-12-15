@@ -3,7 +3,7 @@
 	Theme Name: Fukasawa
     Text Domain: fukasawa
 	Theme URI: http://www.andersnoren.se/teman/fukasawa-wordpress-theme/
-	Version: 1.16
+	Version: 1.19
 	Description: Fukasawa is a minimal masonry style blog theme for photographers and collectors. It features responsive & retina-ready design, Gutenberg support, support for the image, gallery and video post formats, four custom widgets, an archive page template, a gallery slideshow, custom accent color support, custom logo support, editor styles and translation ready code. Demo: http://www.andersnoren.se/themes/fukasawa/
 	Tags: blog, three-columns, left-sidebar, custom-colors, custom-menu, editor-style, featured-images, post-formats, sticky-post, theme-options, threaded-comments, translation-ready, portfolio, grid-layout
 	Author: Anders Norén
@@ -63,8 +63,6 @@ ol, ul {
 blockquote:before, blockquote:after {
 	content:"";
 }
-
-a { outline:none; }
 
 input[type=search] {
    -moz-appearance:none;
@@ -193,10 +191,6 @@ img {
 body a,
 .widget_fukasawa_recent_posts a:hover .title,
 .widget_fukasawa_recent_comments a:hover .title {
-	-webkit-transition: all 0.1s ease-in-out;
-	 -moz-transition: all 0.1s ease-in-out;
-	 -ms-transition: all 0.1s ease-in-out;
-	 -o-transition: all 0.1s ease-in-out;
 	 transition: all 0.1s ease-in-out;
 }
 
@@ -207,18 +201,10 @@ body a,
 .post-content input[type="reset"],
 .post-content input[type="button"],
 .archive-nav a {
-	-webkit-transition: all 0.2s ease-in-out;
-	 -moz-transition: all 0.2s ease-in-out;
-	 -ms-transition: all 0.2s ease-in-out;
-	 -o-transition: all 0.2s ease-in-out;
 	 transition: all 0.2s ease-in-out;
 }
 
 .blog-title a {
-	-webkit-transition: all 0.3s ease-in-out;
-	 -moz-transition: all 0.3s ease-in-out;
-	 -ms-transition: all 0.3s ease-in-out;
-	 -o-transition: all 0.3s ease-in-out;
 	 transition: all 0.3s ease-in-out;
 }
 
@@ -226,10 +212,6 @@ body a,
 .posts .post .post-overlay,
 .post-navigation a,
 .post-navigation a p {
-	-webkit-transition: all 0.4s ease-in-out;
-	 -moz-transition: all 0.4s ease-in-out;
-	 -ms-transition: all 0.4s ease-in-out;
-	 -o-transition: all 0.4s ease-in-out;
 	 transition: all 0.4s ease-in-out;
 }
 
@@ -488,20 +470,9 @@ body a,
 /* Widget search --------------------------------------- */
 
 
-.widget_search .search-field {
-	padding: 15px 49px 15px 15px;
+.widget_search .searchform input[type="text"] {
+	padding: 15px 50px 15px 15px;
 	font-size: 14px;
-}
-
-.widget_search .search-button { 
-	width: 24px;
-	height: 24px;
-	margin-top: -12px;
-	right: 13px; 
-}
-
-.widget_search .search-button .genericon {
-	font-size: 24px;
 }
 
 
@@ -706,12 +677,22 @@ body a,
 
 
 .posts { 
+	opacity: 0;
 	overflow: visible !important; 
 	position: relative;
+	transition: opacity .15s linear;
+}
+
+.no-js .posts {
+	opacity: 1;
+}
+
+.posts .grid-sizer,
+.posts .post-container { 
+	width: 33.33333%;
 }
 
 .posts .post-container { 
-	width: 33.33333%; 
 	padding: 10px;
 	overflow: hidden;
 }
@@ -1432,7 +1413,8 @@ img.alignnone,
 	color: #333;
 	background: #f2f2f2;
 	border-radius: 3px;
-	-webkit-appearance: none;
+	-moz-appearance:none;
+   	-webkit-appearance:none;
 }
 
 .post-content input[type="file"] {
@@ -2146,12 +2128,14 @@ p.comment-form-author { margin-right: 5%; }
 /* Search form --------------------------------------- */
 
 
-.search-form { position: relative; }
+.searchform { 
+	position: relative; 
+}
 
-.search-field {
+.searchform input[type="text"] {
 	display: block;
 	width: 100%;
-	padding: 20px 80px 20px 20px;
+	padding: 20px 50px 20px 20px;
 	margin: 0;
 	border: none;
 	border-radius: 3px;
@@ -2161,25 +2145,34 @@ p.comment-form-author { margin-right: 5%; }
 	color: #666;
 }
 
-.search-field:focus { outline: none; }
+.searchform input[type="text"]:focus { 
+	outline: none; 
+}
 
-.search-button {
+.searchform input[type="submit"] {
+	background: transparent url( ./images/icons/search.svg ) no-repeat center;
+	background-size: 24px auto;
+	border: none;
+	box-shadow: none;
+	color: inherit;
+	cursor: pointer;
 	display: block;
-	height: 32px;
-	width: 32px;
+	opacity: .5;
+	padding: 0;
 	position: absolute;
-	top: 50%;
-	margin-top: -16px;
-	right: 15px;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	text-indent: -999999px;
+	transition: opacity .1s linear;
+	width: 50px;
+	-moz-appearance: none;
+	-webkit-appearance: none;
 }
 
-.search-button .genericon { 
-	font-size: 32px;
-	color: #666;
+.searchform input[type="submit"]:hover {
+	opacity: 1;
 }
-
-.search-button:hover { cursor: pointer; }
-.search-button:hover .genericon { color: #019EBD; }
 
 
 /* Archive template --------------------------------------- */
@@ -2304,7 +2297,10 @@ img#wpstats { display: none; }
 	
 	/* blog */
 	
-	.posts .post-container { width: 50%; }
+	.posts .grid-sizer,
+	.posts .post-container { 
+		width: 50%; 
+	}
 	
 			
 }
@@ -2407,13 +2403,19 @@ img#wpstats { display: none; }
 	/* nav toggle */
 	
 	.nav-toggle { 
-		display: block;
-		padding: 12px 12px 10px; 
+		background: transparent;
 		border-radius: 3px;
-		position: absolute;
-		top: 50%;
+		box-shadow: none;
+		display: block;
 		margin-top: -16px;
-		right: 5%;
+		padding: 12px 12px 10px; 
+		position: absolute;
+			right: 5%;
+			top: 50%;
+		transition: background-color .15s linear;
+		-moz-appearance:none;
+		-webkit-appearance:none;
+		
 	}
 	
 	.nav-toggle .bars {
@@ -2482,7 +2484,10 @@ img#wpstats { display: none; }
 	
 	/* blog */
 	
-	.posts .post-container { width: 50%; }
+	.posts .grid-sizer,
+	.posts .post-container { 
+		width: 50%; 
+	}
 
 
 	/* post content */
@@ -2538,6 +2543,7 @@ img#wpstats { display: none; }
 	
 	/* blog */
 	
+	.posts .grid-sizer,
 	.posts .post-container { 
 		width: 100%; 
 		padding: 0;

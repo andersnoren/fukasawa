@@ -68,7 +68,7 @@ if ( ! function_exists( 'fukasawa_load_javascript_files' ) ) {
 		if ( ! is_admin() ) {		
 			wp_register_script( 'fukasawa_flexslider', get_template_directory_uri() . '/js/flexslider.js', '', true );
 
-			wp_enqueue_script( 'fukasawa_global', get_template_directory_uri() . '/js/global.js', array( 'jquery', 'masonry', 'fukasawa_flexslider' ), '', true );
+			wp_enqueue_script( 'fukasawa_global', get_template_directory_uri() . '/js/global.js', array( 'jquery', 'masonry', 'imagesloaded', 'fukasawa_flexslider' ), '', true );
 
 			if ( is_singular() ) wp_enqueue_script( "comment-reply" );
 		}

@@ -55,24 +55,20 @@
 			<?php elseif ( get_bloginfo( 'description' ) || get_bloginfo( 'title' ) ) : 
 				
 				// h1 on singular, h2 elsewhere
-				$title_type = is_singular() ? '2' : '1'; ?>
+				$title_type = is_singular() ? 'h2' : 'h1'; ?>
 		
-				<h<?php echo $title_type; ?> class="blog-title">
+				<<?php echo $title_type; ?> class="blog-title">
 					<a href="<?php echo esc_url( home_url() ); ?>" title="<?php echo esc_attr( get_bloginfo( 'title' ) ); ?> &mdash; <?php echo esc_attr( get_bloginfo( 'description' ) ); ?>" rel="home"><?php echo esc_attr( get_bloginfo( 'title' ) ); ?></a>
-				</h<?php echo $title_type; ?>>
+				</<?php echo $title_type; ?>>
 				
 			<?php endif; ?>
 			
-			<a class="nav-toggle hidden" title="<?php _e( 'Click to view the navigation', 'fukasawa' ); ?>" href="#">
+			<button type="button" class="nav-toggle hidden" title="<?php _e( 'Click to view the navigation', 'fukasawa' ); ?>">
 			
 				<div class="bars">
-				
 					<div class="bar"></div>
 					<div class="bar"></div>
 					<div class="bar"></div>
-					
-					<div class="clear"></div>
-				
 				</div>
 				
 				<p>
@@ -80,7 +76,7 @@
 					<span class="close"><?php _e( 'Close', 'fukasawa' ); ?></span>
 				</p>
 			
-			</a>
+			</button>
 			
 				<ul class="main-menu">
 
