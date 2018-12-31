@@ -58,6 +58,10 @@ Source: http://flexslider.woothemes.com
 
 == Changelog ==
 
+Version 1.20 (2018-12-15)
+-------------------------
+- Fixed elements being incorrectly displayed on pages
+
 Version 1.19 (2018-12-15)
 -------------------------
 - Implemented Images Loaded, to prevent the Masonry layout from getting messed up

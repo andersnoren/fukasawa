@@ -85,74 +85,86 @@
 					</div><!-- .post-content -->
 					
 					<div class="clear"></div>
-					
-					<div class="post-meta-bottom">
-					
-						<?php 
-						$args = array(
-							'before'           => '<div class="clear"></div><p class="page-links"><span class="title">' . __( 'Pages:','fukasawa' ) . '</span>',
-							'after'            => '</p>',
-							'link_before'      => '<span>',
-							'link_after'       => '</span>',
-							'separator'        => '',
-							'pagelink'         => '%',
-							'echo'             => 1
-						);
-					
-						wp_link_pages( $args ); 
-						?>
-					
-						<ul>
-							<li class="post-date"><a href="<?php the_permalink(); ?>"><?php the_date( get_option( 'date_format' ) ); ?></a></li>
 
-							<?php if ( has_category() ) : ?>
-								<li class="post-categories"><?php _e( 'In', 'fukasawa' ); ?> <?php the_category( ', ' ); ?></li>
-							<?php endif; ?>
-
-							<?php if ( has_tag() ) : ?>
-								<li class="post-tags"><?php the_tags('', ' '); ?></li>
-							<?php endif; ?>
-
-							<?php edit_post_link( __( 'Edit post', 'fukasawa' ), '<li>', '</li>' ); ?>
-						</ul>
+					<?php if ( is_single() ) : ?>
+					
+						<div class="post-meta-bottom">
 						
-						<div class="clear"></div>
+							<?php 
+							$args = array(
+								'before'           => '<div class="clear"></div><p class="page-links"><span class="title">' . __( 'Pages:','fukasawa' ) . '</span>',
+								'after'            => '</p>',
+								'link_before'      => '<span>',
+								'link_after'       => '</span>',
+								'separator'        => '',
+								'pagelink'         => '%',
+								'echo'             => 1
+							);
 						
-					</div><!-- .post-meta-bottom -->
+							wp_link_pages( $args ); 
+							?>
+						
+							<ul>
+								<li class="post-date"><a href="<?php the_permalink(); ?>"><?php the_date( get_option( 'date_format' ) ); ?></a></li>
+
+								<?php if ( has_category() ) : ?>
+									<li class="post-categories"><?php _e( 'In', 'fukasawa' ); ?> <?php the_category( ', ' ); ?></li>
+								<?php endif; ?>
+
+								<?php if ( has_tag() ) : ?>
+									<li class="post-tags"><?php the_tags('', ' '); ?></li>
+								<?php endif; ?>
+
+								<?php edit_post_link( __( 'Edit post', 'fukasawa' ), '<li>', '</li>' ); ?>
+							</ul>
+							
+							<div class="clear"></div>
+							
+						</div><!-- .post-meta-bottom -->
+
+					<?php endif; ?>
 				
 				</div><!-- .post-inner -->
+
+				<?php if ( is_single() ) : ?>
 				
-				<div class="post-navigation">
+					<div class="post-navigation">
 
-					<?php
+						<?php
 
-					$prev_post = get_previous_post();
-					$next_post = get_next_post();
+						$prev_post = get_previous_post();
+						$next_post = get_next_post();
 
-					if ( $prev_post ) : ?>
-					
-						<a class="post-nav-prev" href="<?php echo get_permalink( $prev_post->ID ); ?>">
-							<p>&larr; <?php _e( 'Previous post', 'fukasawa' ); ?></p>
-						</a>
-
-						<?php 
-					endif;
-					
-					if ( $next_post ) : ?>
+						if ( $prev_post ) : ?>
 						
-						<a class="post-nav-next" href="<?php echo get_permalink( $next_post->ID ); ?>">					
-							<p><?php _e( 'Next post', 'fukasawa' ); ?> &rarr;</p>
-						</a>
-				
-						<?php 
-					endif; 
-					?>
+							<a class="post-nav-prev" href="<?php echo get_permalink( $prev_post->ID ); ?>">
+								<p>&larr; <?php _e( 'Previous post', 'fukasawa' ); ?></p>
+							</a>
+
+							<?php 
+						endif;
+						
+						if ( $next_post ) : ?>
+							
+							<a class="post-nav-next" href="<?php echo get_permalink( $next_post->ID ); ?>">					
+								<p><?php _e( 'Next post', 'fukasawa' ); ?> &rarr;</p>
+							</a>
 					
-					<div class="clear"></div>
-				
-				</div><!-- .post-navigation -->
+							<?php 
+						endif; 
+						?>
+						
+						<div class="clear"></div>
+					
+					</div><!-- .post-navigation -->
+
+				<?php endif; ?>
+
+				<?php if ( is_single() || comments_open() ) : ?>
 									
-				<?php comments_template( '', true ); ?>
+					<?php comments_template( '', true ); ?>
+
+				<?php endif; ?>
 			
 			</div><!-- .post -->
 																
