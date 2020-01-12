@@ -5,69 +5,72 @@
 		<?php 
 
 		$post_format = get_post_format();
+
+		if ( ! post_password_required() ) :
 		
-		// Video format specific featured media
-		if ( $post_format == 'video' && strpos( $post->post_content, '<!--more-->' ) ) : ?>
+			// Video format specific featured media
+			if ( $post_format == 'video' && strpos( $post->post_content, '<!--more-->' ) ) : ?>
 
-			<div class="featured-media">
+				<div class="featured-media">
 
-				<?php
-						
-				// Fetch post content
-				$content = get_post_field( 'post_content', get_the_ID() );
-				
-				// Get content parts
-				$content_parts = get_extended( $content );
-				
-				// oEmbed part before <!--more--> tag
-				$embed_code = wp_oembed_get( $content_parts['main'] ); 
-				
-				echo $embed_code;
-				
-				?>
+					<?php
+							
+					// Fetch post content
+					$content = get_post_field( 'post_content', get_the_ID() );
+					
+					// Get content parts
+					$content_parts = get_extended( $content );
+					
+					// oEmbed part before <!--more--> tag
+					$embed_code = wp_oembed_get( $content_parts['main'] ); 
+					
+					echo $embed_code;
+					
+					?>
 
-			</div><!-- .featured-media -->
+				</div><!-- .featured-media -->
 
-			<?php 
-		
-		// Gallery format specific featured media
-		elseif ( $post_format == 'gallery' ) : ?>
-
-			<div class="featured-media">
+				<?php 
 			
-				<?php fukasawa_flexslider( 'post-thumb' ); ?>
+			// Gallery format specific featured media
+			elseif ( $post_format == 'gallery' ) : ?>
+
+				<div class="featured-media">
 				
-			</div><!-- .featured-media -->
-	
-		<?php 
+					<?php fukasawa_flexslider( 'post-thumb' ); ?>
+					
+				</div><!-- .featured-media -->
 		
-		// Image format specific featured media
-		elseif ( $post_format == 'image' && has_post_thumbnail() ) : ?>
-
-			<div class="featured-media">
-
-				<?php the_post_thumbnail( 'post-thumb' ); ?>
-
-				<a class="post-overlay" href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
-						
-					<p class="view"><?php _e( 'View', 'fukasawa' ); ?> &rarr;</p>
-				
-				</a>
-
-			</div><!-- .featured-media -->
-
-		<?php 
-		
-		// Standard format featured media
-		elseif ( has_post_thumbnail() ) : ?>
-		
-			<a class="featured-media" title="<?php the_title_attribute(); ?>" href="<?php the_permalink(); ?>">	
-				
-				<?php the_post_thumbnail( 'post-thumb' ); ?>
-				
-			</a><!-- .featured-media -->
-				
 			<?php 
+			
+			// Image format specific featured media
+			elseif ( $post_format == 'image' && has_post_thumbnail() ) : ?>
+
+				<div class="featured-media">
+
+					<?php the_post_thumbnail( 'post-thumb' ); ?>
+
+					<a class="post-overlay" href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
+							
+						<p class="view"><?php _e( 'View', 'fukasawa' ); ?> &rarr;</p>
+					
+					</a>
+
+				</div><!-- .featured-media -->
+
+			<?php 
+			
+			// Standard format featured media
+			elseif ( has_post_thumbnail() ) : ?>
+			
+				<a class="featured-media" title="<?php the_title_attribute(); ?>" href="<?php the_permalink(); ?>">	
+					
+					<?php the_post_thumbnail( 'post-thumb' ); ?>
+					
+				</a><!-- .featured-media -->
+					
+				<?php 
+			endif;
 		endif;
 		
 		// Hide the post title and excerpt for image format posts with post thumbnail

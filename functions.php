@@ -107,7 +107,7 @@ if ( ! function_exists( 'fukasawa_load_style' ) ) {
 
 			}
 
-			wp_register_style( 'fukasawa_genericons', get_stylesheet_directory_uri() . '/genericons/genericons.css' );
+			wp_register_style( 'fukasawa_genericons', get_theme_file_uri( '/genericons/genericons.css' ) );
 
 			$dependencies[] = 'fukasawa_genericons';
 
@@ -748,7 +748,7 @@ if ( ! function_exists( 'fukasawa_block_editor_styles' ) ) :
 
 		}
 
-		wp_register_style( 'fukasawa-block-editor-styles-genericons', get_stylesheet_directory_uri() . '/genericons/genericons.css' );
+		wp_register_style( 'fukasawa-block-editor-styles-genericons', get_theme_file_uri( '/genericons/genericons.css' ) );
 		$dependencies[] = 'fukasawa-block-editor-styles-genericons';
 
 		// Enqueue the editor styles

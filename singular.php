@@ -15,51 +15,55 @@
 				<?php
 				
 				$post_format = get_post_format(); 
+
+				if ( ! post_password_required() ) :
 				
-				if ( $post_format == 'video' ) :
+					if ( $post_format == 'video' ) :
+					
+						if ( $pos = strpos( $post->post_content, '<!--more-->' ) ) : ?>
 				
-					if ( $pos = strpos( $post->post_content, '<!--more-->' ) ) : ?>
-			
-						<div class="featured-media">
+							<div class="featured-media">
+							
+								<?php
+										
+								// Fetch post content
+								$content = get_post_field( 'post_content', get_the_ID() );
+								
+								// Get content parts
+								$content_parts = get_extended( $content );
+								
+								// oEmbed part before <!--more--> tag
+								$embed_code = wp_oembed_get( $content_parts['main'] );
+								
+								echo $embed_code;
+								
+								?>
+							
+							</div><!-- .featured-media -->
 						
 							<?php
-									
-							// Fetch post content
-							$content = get_post_field( 'post_content', get_the_ID() );
-							
-							// Get content parts
-							$content_parts = get_extended( $content );
-							
-							// oEmbed part before <!--more--> tag
-							$embed_code = wp_oembed_get( $content_parts['main'] );
-							
-							echo $embed_code;
-							
-							?>
+						endif;
 						
-						</div><!-- .featured-media -->
+					elseif ( $post_format == 'gallery' ) : ?>
 					
-						<?php
-					endif;
-					
-				elseif ( $post_format == 'gallery' ) : ?>
-				
-					<div class="featured-media">	
-		
-						<?php fukasawa_flexslider( 'post-image' ); ?>
-						
-						<div class="clear"></div>
-						
-					</div><!-- .featured-media -->
-								
-				<?php elseif ( has_post_thumbnail() ) : ?>
-						
-					<div class="featured-media">
+						<div class="featured-media">	
 			
-						<?php the_post_thumbnail( 'post-image' ); ?>
-						
-					</div><!-- .featured-media -->
-						
+							<?php fukasawa_flexslider( 'post-image' ); ?>
+							
+							<div class="clear"></div>
+							
+						</div><!-- .featured-media -->
+									
+					<?php elseif ( has_post_thumbnail() ) : ?>
+							
+						<div class="featured-media">
+				
+							<?php the_post_thumbnail( 'post-image' ); ?>
+							
+						</div><!-- .featured-media -->
+							
+					<?php endif; ?>
+
 				<?php endif; ?>
 				
 				<div class="post-inner">
@@ -73,8 +77,8 @@
 					<div class="post-content">
 					
 						<?php 
-						if ( $post_format == 'video' ) { 
-							$content = $content_parts['extended'];
+						if ( $post_format == 'video' && isset( $content_parts ) ) { 
+							$content = $content_parts['extended'] ? $content_parts['extended'] : '';
 							$content = apply_filters( 'the_content', $content );
 							echo $content;
 						} else {
@@ -86,37 +90,45 @@
 					
 					<div class="clear"></div>
 
-					<?php if ( is_single() ) : ?>
+					<?php 
+
+					$args = array(
+						'before'           => '<div class="clear"></div><p class="page-links"><span class="title">' . __( 'Pages:','fukasawa' ) . '</span>',
+						'after'            => '</p>',
+						'link_before'      => '<span>',
+						'link_after'       => '</span>',
+						'separator'        => '',
+						'pagelink'         => '%',
+						'echo'             => false
+					);
+				
+					$link_pages = wp_link_pages( $args ); 
+					
+					if ( is_single() || $link_pages ) : ?>
 					
 						<div class="post-meta-bottom">
-						
+
 							<?php 
-							$args = array(
-								'before'           => '<div class="clear"></div><p class="page-links"><span class="title">' . __( 'Pages:','fukasawa' ) . '</span>',
-								'after'            => '</p>',
-								'link_before'      => '<span>',
-								'link_after'       => '</span>',
-								'separator'        => '',
-								'pagelink'         => '%',
-								'echo'             => 1
-							);
+							
+							echo $link_pages;
+							
+							if ( is_single() ) : ?>
 						
-							wp_link_pages( $args ); 
-							?>
-						
-							<ul>
-								<li class="post-date"><a href="<?php the_permalink(); ?>"><?php the_date( get_option( 'date_format' ) ); ?></a></li>
+								<ul>
+									<li class="post-date"><a href="<?php the_permalink(); ?>"><?php the_date( get_option( 'date_format' ) ); ?></a></li>
 
-								<?php if ( has_category() ) : ?>
-									<li class="post-categories"><?php _e( 'In', 'fukasawa' ); ?> <?php the_category( ', ' ); ?></li>
-								<?php endif; ?>
+									<?php if ( has_category() ) : ?>
+										<li class="post-categories"><?php _e( 'In', 'fukasawa' ); ?> <?php the_category( ', ' ); ?></li>
+									<?php endif; ?>
 
-								<?php if ( has_tag() ) : ?>
-									<li class="post-tags"><?php the_tags('', ' '); ?></li>
-								<?php endif; ?>
+									<?php if ( has_tag() ) : ?>
+										<li class="post-tags"><?php the_tags('', ' '); ?></li>
+									<?php endif; ?>
 
-								<?php edit_post_link( __( 'Edit post', 'fukasawa' ), '<li>', '</li>' ); ?>
-							</ul>
+									<?php edit_post_link( __( 'Edit post', 'fukasawa' ), '<li>', '</li>' ); ?>
+								</ul>
+
+							<?php endif; ?>
 							
 							<div class="clear"></div>
 							
@@ -158,9 +170,12 @@
 					
 					</div><!-- .post-navigation -->
 
-				<?php endif; ?>
+				<?php endif;
 
-				<?php if ( is_single() || comments_open() ) : ?>
+				$post_type = get_post_type();
+				
+				// Output comments wrapper if it's a post, or if comments are open, or if there's a comment number – and check for password
+				if ( ( $post_type == 'post' || comments_open() || get_comments_number() ) && ! post_password_required() ) : ?>
 									
 					<?php comments_template( '', true ); ?>
 

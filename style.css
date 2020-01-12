@@ -2,12 +2,12 @@
 
 	Theme Name: Fukasawa
     Text Domain: fukasawa
-	Theme URI: http://www.andersnoren.se/teman/fukasawa-wordpress-theme/
-	Version: 1.20
-	Description: Fukasawa is a minimal masonry style blog theme for photographers and collectors. It features responsive & retina-ready design, Gutenberg support, support for the image, gallery and video post formats, four custom widgets, an archive page template, a gallery slideshow, custom accent color support, custom logo support, editor styles and translation ready code. Demo: http://www.andersnoren.se/themes/fukasawa/
-	Tags: blog, three-columns, left-sidebar, custom-colors, custom-menu, editor-style, featured-images, post-formats, sticky-post, theme-options, threaded-comments, translation-ready, portfolio, grid-layout
+	Theme URI: https://www.andersnoren.se/teman/fukasawa-wordpress-theme/
+	Version: 1.28
+	Description: Fukasawa is a minimal masonry style blog theme for photographers and collectors. It features responsive & retina-ready design, Block Editor/Gutenberg support, support for the image, gallery and video post formats, four custom widgets, an archive page template, a gallery slideshow, custom accent color support, custom logo support, and editor styles. Demo: https://www.andersnoren.se/themes/fukasawa/
+	Tags: blog, three-columns, left-sidebar, custom-colors, custom-menu, editor-style, featured-images, post-formats, sticky-post, theme-options, threaded-comments, translation-ready, portfolio, grid-layout, block-styles, wide-blocks
 	Author: Anders Norén
-	Author URI: http://www.andersnoren.se
+	Author URI: https://www.andersnoren.se
 	License: GNU General Public License version 2.0
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -157,7 +157,10 @@ img {
 	left: 0;
 }
 
-.wrapper { margin-left: 280px; }
+.wrapper { 
+	display: block;
+	margin-left: 280px; 
+}
 
 .content {
 	width: 1200px;
@@ -215,36 +218,58 @@ body a,
 	 transition: all 0.4s ease-in-out;
 }
 
-
-/* Screen Reader Text --------------------------------------- */
-
+/* Screen Reader Text ------------------------ */
 
 .screen-reader-text {
-	clip: rect(1px, 1px, 1px, 1px);
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
+	clip: rect( .1rem, .1rem, .1rem, .1rem );
+	height: .1rem;
 	overflow: hidden;
+	position: absolute !important;
+		left: -999999rem;
+	width: .1rem;
 }
 
 .screen-reader-text:focus {
 	background-color: #f1f1f1;
-	border-radius: 3px;
-	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	border-radius: .3rem;
+	box-shadow: 0 0 .2rem .2rem rgba( 0, 0, 0, 0.6 );
 	clip: auto !important;
-	color: #21759b;
 	display: block;
-	font-size: 14px;
-	font-size: 0.875rem;
-	font-weight: bold;
+	font-size: 1.4rem;
+	font-weight: 700;
 	height: auto;
-	left: 5px;
+	left: .5rem;
 	line-height: normal;
-	padding: 15px 23px 14px;
+	padding: 1.5rem 2.3rem 1.4rem 2.3rem;
 	text-decoration: none;
-	top: 5px;
+	top: .5rem;
 	width: auto;
-	z-index: 100000; /* Above WP toolbar. */
+	z-index: 100000;
+}
+
+
+/* Skip Link --------------------------------- */
+
+.skip-link {
+	position: absolute;
+		left: -9999rem;
+		top: 2.5rem;
+	z-index: 999999999;
+}
+
+.skip-link:focus {
+	left: 2.5rem;
+	text-decoration: none;
+}
+
+
+/* Accessibility Settings -------------------- */
+
+@media ( prefers-reduced-motion: reduce ) {
+	* {
+		animation-duration: 0s !important;
+		transition-duration: 0s !important;
+	}
 }
 
 
@@ -976,7 +1001,6 @@ body a,
 
 /* Post navigation  ----------------------------------------- */
 
-
 .post-navigation { 
 	background: #f2f2f2; 
 	min-height: 2px;
@@ -1015,11 +1039,9 @@ body a,
 .post-navigation a:hover p { color: #fff; }
 
 
-/* Post formats  ----------------------------------------- */
-
+/* Post formats ------------------------------ */
 
 /* format gallery */
-
 
 .post.single .flex-direction-nav { margin-top: -24px; }
 
@@ -1034,6 +1056,13 @@ body a,
 .post.single .flexslider:hover .flex-direction-nav a {
 	margin-left: 0;
 	margin-right: 0;
+}
+
+
+/* Search Results ---------------------------- */
+
+.search-no-results .post-content input[type="text"] {
+	background-color: #fff;
 }
 
 
@@ -1308,7 +1337,8 @@ img.alignnone,
 	margin-left: 1em;
 }
 
-.post-content .aligncenter {
+.post-content .aligncenter,
+.post-content .aligncenter img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -1436,6 +1466,7 @@ img.alignnone,
 	outline: none;
 }
 
+.button,
 .post-content input[type="submit"],
 .post-content input[type="reset"],
 .post-content input[type="button"] {
@@ -1460,17 +1491,13 @@ img.alignnone,
 	margin-left: 10px;
 }
 
+.button:hover,
 .post-content input[type="submit"]:hover,
 .post-content input[type="reset"]:hover,
 .post-content input[type="button"]:hover {
 	cursor: pointer;
 	background: #019EBD;
 	color: #fff;
-}
-
-.post-content input[type="submit"]:focus,
-.post-content input[type="submit"]:active {
-	outline: none;
 }
 
 
@@ -1614,6 +1641,11 @@ img.alignnone,
 
 .post-content ul.wp-block-gallery:not(.alignfull):not(.alignwide) {
 	margin-left: 0;
+}
+
+.wp-block-gallery .blocks-gallery-image:last-child, 
+.wp-block-gallery .blocks-gallery-item:last-child {
+	margin-bottom: 16px;
 }
 
 
@@ -2021,26 +2053,47 @@ p.comment-form-author { margin-right: 5%; }
 /* Page title --------------------------------------- */
 
 
-.page-title { padding: 1% 0 10px; }
-
-.page-title h4 {
-	display: block;
-	padding-bottom: 10px;
-	border-bottom: 2px solid #e1e1e1;
-	margin: 0 10px;
-	line-height: 120%;
-	font-weight: 700;
+.page-title { 
 	color: #666;
+	padding: 1% 0 10px; 
 }
 
-.search-no-results .page-title { padding-bottom: 20px; }
-.search-no-results .page-title h4 { margin: 0; }
+.search-no-results .page-title { 
+	padding-bottom: 20px; 
+}
 
-.page-title span {
+.archive-title,
+.archive-description {
+	margin: 0 10px;
+}
+
+.search-no-results .archive-title,
+.search-no-results .archive-description { 
+	margin: 0; 
+}
+
+.archive-title {
+	border-bottom: 2px solid #e1e1e1;
+	font-weight: 700;
+	line-height: 120%;
+	padding-bottom: 10px;
+}
+
+.archive-title span {
 	float: right;
 	font-weight: 400;
 	font-style: italic;
 	color: #999;
+}
+
+.archive-description {
+	line-height: 1.33;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.archive-description p {
+	line-height: inherit;
 }
 
 
@@ -2664,11 +2717,17 @@ img#wpstats { display: none; }
 		
 	/* pagination */
 	
-	.page-title { padding-bottom: 20px; }
+	.page-title { 
+		font-size: 16px;
+		padding-bottom: 20px; 
+	}
 	
-	.page-title h4 { 
-		font-size: 0.8em;
+	.archive-title { 
 		margin: 0;
+	}
+
+	.archive-description {
+		margin: 10px 0 0;
 	}
 
 

@@ -1,9 +1,14 @@
-jQuery(document).ready(function($) {
+jQuery( document ).ready( function( $ ) {
 	
-	
+	// Masonry
 	$masonryWrapper = $( '.posts' );
 
 	if ( $masonryWrapper.length ) {
+
+		// If the grid sizer doesn't exist, add it
+		if ( ! $( '.grid-sizer' ).length ) {
+			$( '.posts' ).prepend( '<div class="grid-sizer"></div>' );
+		}
 
 		$grid = $masonryWrapper.imagesLoaded( function() {
 

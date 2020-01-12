@@ -2,7 +2,7 @@
 Contributors: Anlino
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=anders%40andersnoren%2ese&lc=US&item_name=Free%20WordPress%20Themes%20from%20Anders%20Noren&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Requires at least: 4.4
-Tested up to: 5.0
+Tested up to: 5.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -49,14 +49,64 @@ Source: http://flexslider.woothemes.com
 
 == Use the video post format
 
-1. Go to Admin > Posts > Add New.
-2. Select the "Video" post format in the Post Attributes box.
-3. A meta box with the title "Video URL" should appear in the top of the right sidebar.
-4. Paste the URL to the video you wish to display in the box, and publish/update the post.
-5. The video you linked to should now be displayed in the media section above the post.
+1. Create a new post.
+2. Select "Video" in the Format window to the right.
+3. In the post content, enter the full url to the video you want to include.
+4. Directly after the url, add the <!--more--> tag (or "More" block in the Block Editor) followed by the rest of the content. Example:
+
+https://www.youtube.com/watch?v=iszwuX1AK6A
+<!--more-->
+The rest of the content...
+
+5. Publish.
+6. The video will now be displayed in the featured image position, above the title of your post.
 
 
 == Changelog ==
+
+Version 1.28 (2019-07-21)
+-------------------------
+- Fixed password protection issue
+
+Version 1.27 (2019-07-21)
+-------------------------
+- Added content to search pages without results
+- Added skip link
+- Don't show comments if the post is password protected
+- Don't show the post thumbnail if the post is password protected
+- Fixed font issues in the block editor styles
+
+Version 1.26 (2019-07-01)
+-------------------------
+- Changed the incorrect "block-style" theme tag to the correct "block-styles"
+
+Version 1.25 (2019-07-01)
+-------------------------
+- Updated "Tested up to" to 5.2
+- Fixed the margin of the last gallery item in Block: Gallery
+- Added theme tags for "block-style" and "wide-blocks"
+- Expanded a ternary to be full-length
+- Added output of `get_the_archive_description()` to index.php
+
+Version 1.24 (2019-04-07)
+-------------------------
+- Updated the readme to describe the new method of adding featured videos (new = four years ago)
+- Fixed a potential notice for the video format
+- Added the new wp_body_open() function, along with a function_exists check
+
+Version 1.23 (2019-04-07)
+-------------------------
+- Fixed a misplaced conditional that prevented wp_link_pages() from showing up on pages
+
+Version 1.22 (2019-02-02)
+-------------------------
+- Updated Genericons enqueue to work better with child themes
+- Update output of menus in the header to only call wp_nav_menu() once
+- Fixed small images in centered figures to being centered within the figure
+
+Version 1.21 (2018-12-31)
+-------------------------
+- If the .grid-sizer element doesn't exist, add it to .posts before initializing Masonry
 
 Version 1.20 (2018-12-15)
 -------------------------
