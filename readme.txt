@@ -1,8 +1,8 @@
 === Fukasawa ===
 Contributors: Anlino
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=anders%40andersnoren%2ese&lc=US&item_name=Free%20WordPress%20Themes%20from%20Anders%20Noren&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
-Requires at least: 4.4
-Tested up to: 5.2
+Requires at least: 4.5
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -63,6 +63,48 @@ The rest of the content...
 
 
 == Changelog ==
+
+Version 2.0.0 (2020-04-27)
+-------------------------
+- Updated the theme folder structure with an `/assets/` folder, and moved assets to it.
+- Renamed the editor style files.
+- Removed Genericons font files no longer needed to support modern browsers (IE10+).
+- Removed the license.txt file.
+- Removed output of "Comments are closed" when comments are closed.
+- Updated conditional for comment output accordingly.
+- Updated `template-archive.php` to use `singular.php` for output, with the archive list included in a separate file.
+- Replaced `<div class="clear"></div>` elements with pseudo clearing determined by a class on the wrapper.
+- Updated templates to use more semantic HTML5 elements.
+- Updated the title on attachment pages to use a H1 heading.
+- Updated conditional for when to use a H1 element for the site title.
+- Added output of the site title as screen reader text to the header site logo.
+- Removed unneccessary title attributes from links.
+- Removed obsolete vendor prefixes.
+- Removed font antialiasing.
+- Added output of the widget ID attributes to the widget area.
+- Added support for the core custom_logo setting, and updated the old fukasawa_logo setting to only be displayed if you already have a fukasawa_logo image set (thanks, @poena).
+- Bumped the "Requires at least" tag to 4.5, since Fukasawa now uses custom_logo.
+- Removed Customizer live preview.
+- Increased the color contrast of light gray colors.
+- Fixed a mismatch between the block editor palette settings and the actual block editor colors.
+- Renamed the "Regular" block editor font size slug to "normal", to make it the default choice in the block editor.
+- Added output of an edit link after the content on post types other than posts.
+- Simplified the header structure on mobile.
+- Restructured and simplified global.js, and made the Masonry function more reliable.
+- Added theme version to enqueues.
+- Social block margin fix.
+- Updated "Tested up to" to 5.4.
+- Fixed potential notice in custom widgets.
+- Reduced specificity of ul/ol styles in the post content, fixing conflicts with core block styles.
+- Added styles for the new calendar widget footer nav in 5.4.
+- Cleaned up the CSS, removed unused classes.
+- Moved the archive pagination to `pagination.php`.
+- Updated the `$name` parameter of `get_template_part()` in the main posts loop to allow for custom templates for custom post types.
+- Adjusted block editor styles.
+- Added base vertical margins for core blocks.
+- Changed the file type of the screenshot from `png` to `jpg`, reducing theme footprint by 300 KB.
+- Fixed the incorrect comment number being displayed on comments with pagination.
+- Moved the `Fukasawa_Customize` class from `functions.php` to `/inc/classes/class-fukasawa-customize.php`.
 
 Version 1.28 (2019-07-21)
 -------------------------

@@ -15,8 +15,8 @@ class fukasawa_recent_comments extends WP_Widget {
 		// Outputs the content of the widget
 		extract( $args ); // Make before_widget, etc available.
 		
-		$widget_title = apply_filters( 'widget_title', $instance['widget_title'] );
-		$number_of_comments = $instance['number_of_comments'];
+		$widget_title = apply_filters( 'widget_title', isset( $instance['widget_title'] ) ? $instance['widget_title'] : '' );
+		$number_of_comments = isset( $instance['number_of_comments'] ) ? $instance['number_of_comments'] : 5;
 		
 		echo $before_widget;
 		
@@ -49,26 +49,16 @@ class fukasawa_recent_comments extends WP_Widget {
 						foreach ( $comments as $comment ) { ?>
 						
 							<li>
-								
-								<a href="<?php echo get_permalink( $comment->comment_post_ID ); ?>#comment-<?php echo $comment->comment_ID; ?>" title="<?php printf( __( 'Comment to %1$s, posted %2$s', 'fukasawa' ),  get_the_title( $comment->comment_post_ID ), get_the_time( get_option( 'date_format' ) ) ); ?>">
-									
+								<a href="<?php echo get_permalink( $comment->comment_post_ID ); ?>#comment-<?php echo $comment->comment_ID; ?>" class="clear">
 									<div class="post-icon">
-									
 										<?php echo get_avatar( get_comment_author_email( $comment->comment_ID ), $size = '100' ); ?>
-										
 									</div>
 									
 									<div class="inner">
-									
 										<p class="title"><span><?php comment_author(); ?></span></p>
 										<p class="excerpt">"<?php echo fukasawa_get_comment_excerpt( $comment->comment_ID, 13 ); ?>"</p>
-									
 									</div>
-									
-									<div class="clear"></div>
-					
 								</a>
-								
 							</li>
 							
 						<?php 

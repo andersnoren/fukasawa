@@ -33,9 +33,18 @@ if ( ! function_exists( 'fukasawa_setup' ) ) {
 			'container'	=> 'posts',
 			'footer' 	=> false,
 		) );
+
+		// Custom logo
+		add_theme_support( 'custom-logo', array(
+			'height'      => 240,
+			'width'       => 320,
+			'flex-height' => true,
+			'flex-width'  => true,
+			'header-text' => array( 'blog-title' ),
+		) );
 		
 		// Title tag
-		add_theme_support('title-tag');
+		add_theme_support( 'title-tag' );
 		
 		// Add nav menu
 		register_nav_menu( 'primary', __( 'Primary Menu', 'fukasawa' ) );
@@ -56,26 +65,42 @@ if ( ! function_exists( 'fukasawa_setup' ) ) {
 }
 
 
+/*	-----------------------------------------------------------------------------------------------
+	REQUIRED FILES
+	Include required files
+--------------------------------------------------------------------------------------------------- */
+
+// Handle Customizer settings
+require get_template_directory() . '/inc/classes/class-fukasawa-customize.php';
+
+
+/* ---------------------------------------------------------------------------------------------
+   GET THEME VERSION
+   --------------------------------------------------------------------------------------------- */
+
+
+if ( ! function_exists( 'fukasawa_get_version' ) ) {
+	function fukasawa_get_version() {
+		return wp_get_theme( 'fukasawa' )->theme_version;
+	}
+}
+
+
 /* ---------------------------------------------------------------------------------------------
    ENQUEUE SCRIPTS
    --------------------------------------------------------------------------------------------- */
 
 
 if ( ! function_exists( 'fukasawa_load_javascript_files' ) ) {
-
 	function fukasawa_load_javascript_files() {
 
-		if ( ! is_admin() ) {		
-			wp_register_script( 'fukasawa_flexslider', get_template_directory_uri() . '/js/flexslider.js', '', true );
+		wp_register_script( 'fukasawa_flexslider', get_template_directory_uri() . '/assets/js/flexslider.js', '2.7.0', true );
 
-			wp_enqueue_script( 'fukasawa_global', get_template_directory_uri() . '/js/global.js', array( 'jquery', 'masonry', 'imagesloaded', 'fukasawa_flexslider' ), '', true );
+		wp_enqueue_script( 'fukasawa_global', get_template_directory_uri() . '/assets/js/global.js', array( 'jquery', 'masonry', 'imagesloaded', 'fukasawa_flexslider' ), fukasawa_get_version(), true );
 
-			if ( is_singular() ) wp_enqueue_script( "comment-reply" );
-		}
+		if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
 	}
-
 	add_action( 'wp_enqueue_scripts', 'fukasawa_load_javascript_files' );
-
 }
 
 
@@ -100,18 +125,15 @@ if ( ! function_exists( 'fukasawa_load_style' ) ) {
 			$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
 
 			if ( 'off' !== $google_fonts ) {
-
 				wp_register_style( 'fukasawa_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic' );
-
 				$dependencies[] = 'fukasawa_googleFonts';
-
 			}
 
-			wp_register_style( 'fukasawa_genericons', get_theme_file_uri( '/genericons/genericons.css' ) );
+			wp_register_style( 'fukasawa_genericons', get_theme_file_uri( '/assets/fonts/genericons/genericons.css' ) );
 
 			$dependencies[] = 'fukasawa_genericons';
 
-			wp_enqueue_style( 'fukasawa_style', get_stylesheet_uri(), $dependencies );
+			wp_enqueue_style( 'fukasawa_style', get_stylesheet_uri(), $dependencies, fukasawa_get_version() );
 		}
 
 	}
@@ -129,7 +151,7 @@ if ( ! function_exists( 'fukasawa_add_editor_styles' ) ) {
 
 	function fukasawa_add_editor_styles() {
 
-		add_editor_style( 'fukasawa-editor-styles.css' );
+		add_editor_style( 'assets/css/fukasawa-block-editor-styles.css' );
 
 		/**
 		 * Translators: If there are characters in your language that are not
@@ -164,8 +186,8 @@ if ( ! function_exists( 'fukasawa_sidebar_registration' ) ) {
 			'description' 	=> __( 'Widgets in this area will be shown in the sidebar.', 'fukasawa' ),
 			'before_title' 	=> '<h3 class="widget-title">',
 			'after_title' 	=> '</h3>',
-			'before_widget' => '<div class="widget %2$s"><div class="widget-content">',
-			'after_widget' 	=> '</div><div class="clear"></div></div>'
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widget-content clear">',
+			'after_widget' 	=> '</div></div>'
 		) );
 
 	}
@@ -428,7 +450,7 @@ if ( ! function_exists( 'fukasawa_comment' ) ) {
 						<h4><?php echo get_comment_author_link(); ?></h4>
 						
 						<div class="comment-meta">
-							<a class="comment-date-link" href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>" title="<?php printf( _x( '$s at $s', 'Variables: comment date, comment time', 'fukasawa' ), get_comment_date(), get_comment_time() ); ?>"><?php echo get_comment_date( get_option( 'date_format' ) ); ?></a>
+							<a class="comment-date-link" href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php echo get_comment_date( get_option( 'date_format' ) ); ?></a>
 						</div><!-- .comment-meta -->
 					
 					</div><!-- .comment-header-inner -->
@@ -441,7 +463,7 @@ if ( ! function_exists( 'fukasawa_comment' ) ) {
 					
 				</div><!-- .comment-content -->
 				
-				<div class="comment-actions">
+				<div class="comment-actions clear">
 				
 					<?php if ( 0 == $comment->comment_approved ) : ?>
 					
@@ -464,8 +486,6 @@ if ( ! function_exists( 'fukasawa_comment' ) ) {
 						?>
 					
 					</div>
-					
-					<div class="clear"></div>
 				
 				</div><!-- .comment-actions -->
 											
@@ -479,180 +499,20 @@ if ( ! function_exists( 'fukasawa_comment' ) ) {
 
 
 /* ---------------------------------------------------------------------------------------------
-   THEME OPTIONS
-   --------------------------------------------------------------------------------------------- */
-
-
-class fukasawa_Customize {
-
-   public static function fukasawa_register( $wp_customize ) {
-   
-      //1. Define a new section (if desired) to the Theme Customizer
-      $wp_customize->add_section( 'fukasawa_options', 
-         array(
-            'title' 		=> __( 'Options for Fukasawa', 'fukasawa' ), //Visible title of section
-            'priority' 		=> 35, //Determines what order this appears in
-            'capability' 	=> 'edit_theme_options', //Capability needed to tweak
-            'description' 	=> __( 'Allows you to customize theme settings for Fukasawa.', 'fukasawa' ), //Descriptive tooltip
-         ) 
-      );
-      
-      $wp_customize->add_section( 'fukasawa_logo_section' , array(
-		    'title'       => __( 'Logo', 'fukasawa' ),
-		    'priority'    => 40,
-		    'description' => __('Upload a logo to replace the default site title in the sidebar/header', 'fukasawa'),
-	  ) );
-      
-      
-      //2. Register new settings to the WP database...
-      $wp_customize->add_setting( 'accent_color', //No need to use a SERIALIZED name, as `theme_mod` settings already live under one db record
-         array(
-            'default' 			=> '#019EBD', //Default setting/value to save
-            'type' 				=> 'theme_mod', //Is this an 'option' or a 'theme_mod'?
-            'transport' 		=> 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
-            'sanitize_callback' => 'sanitize_hex_color'
-         ) 
-      );
-	  
-	  $wp_customize->add_setting( 'fukasawa_logo', 
-      	array( 
-      		'sanitize_callback' => 'esc_url_raw'
-      	) 
-      );
-      
-      
-      //3. Finally, we define the control itself (which links a setting to a section and renders the HTML controls)...
-      $wp_customize->add_control( new WP_Customize_Color_Control( //Instantiate the color control class
-         $wp_customize, //Pass the $wp_customize object (required)
-         'fukasawa_accent_color', //Set a unique ID for the control
-         array(
-            'label' 	=> __( 'Accent Color', 'fukasawa' ), //Admin-visible name of the control
-            'section' 	=> 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
-            'settings' 	=> 'accent_color', //Which setting to load and manipulate (serialized is okay)
-            'priority' 	=> 10, //Determines the order this control appears in for the specified section
-         ) 
-      ) );
-      
-      $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'fukasawa_logo', array(
-		    'label'    => __( 'Logo', 'fukasawa' ),
-		    'section'  => 'fukasawa_logo_section',
-		    'settings' => 'fukasawa_logo',
-	  ) ) );
-      
-      //4. We can also change built-in settings by modifying properties. For instance, let's make some stuff use live preview JS...
-      $wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
-      $wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
-   }
-
-   public static function fukasawa_header_output() {
-
-		echo '<!-- Customizer CSS -->';
-
-		echo '<style type="text/css">';
-			self::fukasawa_generate_css( 'body a', 'color', 'accent_color' );
-			self::fukasawa_generate_css( 'body a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.main-menu .current-menu-item:before', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.main-menu .current_page_item:before', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget-content .textwidget a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_fukasawa_recent_posts a:hover .title', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_fukasawa_recent_comments a:hover .title', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_archive li a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_categories li a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_meta li a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_nav_menu li a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_rss .widget-content ul a.rsswidget:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '#wp-calendar thead', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.widget_tag_cloud a:hover', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.search-button:hover .genericon', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.flex-direction-nav a:hover', 'background-color', 'accent_color' );
-			self::fukasawa_generate_css( 'a.post-quote:hover', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.posts .post-title a:hover', 'color', 'accent_color' );
-
-			self::fukasawa_generate_css( '.post-content a', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content a:hover', 'border-bottom-color', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content blockquote:before', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content fieldset legend', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content input[type="submit"]:hover', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content input[type="button"]:hover', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content input[type="reset"]:hover', 'background', 'accent_color' );
-
-			self::fukasawa_generate_css( '.post-content .has-accent-color', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.post-content .has-accent-background-color', 'background-color', 'accent_color' );
-
-			self::fukasawa_generate_css( '.page-links a:hover', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.comments .pingbacks li a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.comment-header h4 a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.bypostauthor.commet .comment-header:before', 'background', 'accent_color' );
-			self::fukasawa_generate_css( '.form-submit #submit:hover', 'background-color', 'accent_color' );
-
-			self::fukasawa_generate_css( '.nav-toggle.active', 'background-color', 'accent_color' );
-			self::fukasawa_generate_css( '.mobile-menu .current-menu-item:before', 'color', 'accent_color' );
-			self::fukasawa_generate_css( '.mobile-menu .current_page_item:before', 'color', 'accent_color' );
-
-			self::fukasawa_generate_css( 'body#tinymce.wp-editor a', 'color', 'accent_color' );
-			self::fukasawa_generate_css( 'body#tinymce.wp-editor a:hover', 'color', 'accent_color' );
-			self::fukasawa_generate_css( 'body#tinymce.wp-editor fieldset legend', 'background', 'accent_color' );
-			self::fukasawa_generate_css( 'body#tinymce.wp-editor blockquote:before', 'color', 'accent_color' );
-		echo '</style>';
-
-		echo '<!--/Customizer CSS-->';
-	      
-   }
-   
-   public static function fukasawa_live_preview() {
-      wp_enqueue_script( 
-           'fukasawa-themecustomizer', // Give the script a unique ID
-           get_template_directory_uri() . '/js/theme-customizer.js', // Define the path to the JS file
-           array(  'jquery', 'customize-preview' ), // Define dependencies
-           '', // Define a version (optional) 
-           true // Specify whether to put in footer (leave this true)
-      );
-   }
-
-   public static function fukasawa_generate_css( $selector, $style, $mod_name, $prefix='', $postfix='', $echo=true ) {
-      $return = '';
-      $mod = get_theme_mod($mod_name);
-      if ( ! empty( $mod ) ) {
-         $return = sprintf('%s { %s:%s; }',
-            $selector,
-            $style,
-            $prefix.$mod.$postfix
-         );
-         if ( $echo ) {
-            echo $return;
-         }
-      }
-      return $return;
-    }
-}
-
-// Setup the Theme Customizer settings and controls...
-add_action( 'customize_register' , array( 'fukasawa_Customize' , 'fukasawa_register' ) );
-
-// Output custom CSS to live site
-add_action( 'wp_head' , array( 'fukasawa_Customize' , 'fukasawa_header_output' ) );
-
-// Enqueue live preview javascript in Theme Customizer admin screen
-add_action( 'customize_preview_init' , array( 'fukasawa_Customize' , 'fukasawa_live_preview' ) );
-
-
-/* ---------------------------------------------------------------------------------------------
-   SPECIFY GUTENBERG SUPPORT
+   SPECIFY BLOCK EDITOR SUPPORT
 ------------------------------------------------------------------------------------------------ */
 
 
 if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
-
 	function fukasawa_add_gutenberg_features() {
 
-		/* Gutenberg Features --------------------------------------- */
+		/* Block Editor Features ------------- */
 
 		add_theme_support( 'align-wide' );
 
-		/* Gutenberg Palette --------------------------------------- */
+		/* Block Editor Palette -------------- */
 
-		$accent_color = get_theme_mod( 'accent_color' ) ? get_theme_mod( 'accent_color' ) : '#019EBD';
+		$accent_color = get_theme_mod( 'accent_color', '#019EBD' );
 
 		add_theme_support( 'editor-color-palette', array(
 			array(
@@ -668,17 +528,17 @@ if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
 			array(
 				'name' 	=> _x( 'Dark Gray', 'Name of the dark gray color in the Gutenberg palette', 'fukasawa' ),
 				'slug' 	=> 'dark-gray',
-				'color' => '#555',
+				'color' => '#444',
 			),
 			array(
 				'name' 	=> _x( 'Medium Gray', 'Name of the medium gray color in the Gutenberg palette', 'fukasawa' ),
 				'slug' 	=> 'medium-gray',
-				'color' => '#777',
+				'color' => '#666',
 			),
 			array(
 				'name' 	=> _x( 'Light Gray', 'Name of the light gray color in the Gutenberg palette', 'fukasawa' ),
 				'slug' 	=> 'light-gray',
-				'color' => '#999',
+				'color' => '#767676',
 			),
 			array(
 				'name' 	=> _x( 'White', 'Name of the white color in the Gutenberg palette', 'fukasawa' ),
@@ -687,7 +547,7 @@ if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
 			),
 		) );
 
-		/* Gutenberg Font Sizes --------------------------------------- */
+		/* Block Editor Font Sizes ----------- */
 
 		add_theme_support( 'editor-font-sizes', array(
 			array(
@@ -700,7 +560,7 @@ if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
 				'name' 		=> _x( 'Regular', 'Name of the regular font size in Gutenberg', 'fukasawa' ),
 				'shortName' => _x( 'M', 'Short name of the regular font size in the Gutenberg editor.', 'fukasawa' ),
 				'size' 		=> 18,
-				'slug' 		=> 'regular',
+				'slug' 		=> 'normal',
 			),
 			array(
 				'name' 		=> _x( 'Large', 'Name of the large font size in Gutenberg', 'fukasawa' ),
@@ -718,17 +578,15 @@ if ( ! function_exists( 'fukasawa_add_gutenberg_features' ) ) :
 
 	}
 	add_action( 'after_setup_theme', 'fukasawa_add_gutenberg_features' );
-
 endif;
 
 
 /* ---------------------------------------------------------------------------------------------
-   GUTENBERG EDITOR STYLES
+   BLOCK EDITOR STYLES
    --------------------------------------------------------------------------------------------- */
 
 
 if ( ! function_exists( 'fukasawa_block_editor_styles' ) ) :
-
 	function fukasawa_block_editor_styles() {
 
 		$dependencies = array();
@@ -748,15 +606,12 @@ if ( ! function_exists( 'fukasawa_block_editor_styles' ) ) :
 
 		}
 
-		wp_register_style( 'fukasawa-block-editor-styles-genericons', get_theme_file_uri( '/genericons/genericons.css' ) );
+		wp_register_style( 'fukasawa-block-editor-styles-genericons', get_theme_file_uri( '/assets/fonts/genericons/genericons.css' ) );
 		$dependencies[] = 'fukasawa-block-editor-styles-genericons';
 
 		// Enqueue the editor styles
-		wp_enqueue_style( 'fukasawa-block-editor-styles', get_theme_file_uri( '/fukasawa-gutenberg-editor-style.css' ), $dependencies, '1.0', 'all' );
+		wp_enqueue_style( 'fukasawa-block-editor-styles', get_theme_file_uri( '/assets/css/fukasawa-block-editor-styles.css' ), $dependencies, '1.0', 'all' );
 
 	}
 	add_action( 'enqueue_block_editor_assets', 'fukasawa_block_editor_styles', 1 );
-
 endif;
-
-?>

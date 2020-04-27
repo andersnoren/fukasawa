@@ -15,24 +15,20 @@ class fukasawa_flickr_widget extends WP_Widget {
 		// Outputs the content of the widget
 		extract( $args ); // Make before_widget, etc available.
 		
-		$widget_title = apply_filters( 'widget_title', $instance['widget_title'] );
-		$fli_id = $instance['id'];
-		$fli_number = $instance['number'];
+		$widget_title = apply_filters( 'widget_title', isset( $instance['widget_title'] ) ? $instance['widget_title'] : '' );
+		$fli_id = isset( $instance['id'] ) ? $instance['id'] : null;
+		$fli_number = isset( $instance['number'] ) ? $instance['number'] : 6;
 		$unique_id = $args['widget_id'];
 		
 		echo $before_widget;
 		
 		if ( ! empty( $widget_title ) ) {
-		
 			echo $before_title . $widget_title . $after_title;
-			
 		} ?>
-		
-			<div class="flickr-container">
-				
-				<script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=<?php echo $fli_number; ?>&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=<?php echo $fli_id; ?>"></script>
-			
-			</div>
+	
+		<div class="flickr-container">
+			<script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=<?php echo $fli_number; ?>&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=<?php echo $fli_id; ?>"></script>
+		</div><!-- .flickr-container -->
 							
 		<?php echo $after_widget; 
 	}

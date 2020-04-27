@@ -15,7 +15,7 @@ if ( have_comments() ) : ?>
 			<h2 class="comments-title">
 			
 				<?php 
-				$comment_count = count( $wp_query->comments_by_type['comment'] );
+				$comment_count = get_comments_number();
 				printf( _n( '%s Comment', '%s Comments', $comment_count, 'fukasawa' ), $comment_count ); ?>
 				
 			</h2>
@@ -48,23 +48,17 @@ if ( have_comments() ) : ?>
 						
 				<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
 					
-					<div class="comments-nav" role="navigation">
+					<div class="comments-nav clear" role="navigation">
 					
 						<div class="fleft">
-											
 							<?php previous_comments_link( '&larr; ' . __( 'Older', 'fukasawa' ) . '<span> ' . __( 'Comments', 'fukasawa' ) . '</span>' ); ?>
-						
 						</div>
 						
 						<div class="fright">
-						
 							<?php next_comments_link( __( 'Newer', 'fukasawa' ) . '<span> ' . __( 'Comments','fukasawa' ) . '</span>' . ' &rarr;' ); ?>
-						
 						</div>
 						
-						<div class="clear"></div>
-						
-					</div><!-- .comment-nav-below -->
+					</div><!-- .comments-nav-below -->
 					
 				<?php endif; ?>
 				
@@ -75,21 +69,6 @@ if ( have_comments() ) : ?>
 	</div><!-- .comments-container -->
 	
 	<?php 
-endif;
-
-if ( ! comments_open() && ! is_page() ) : ?>
-
-	<div class="comments-container">
-	
-		<div class="comments-inner">
-
-			<p class="no-comments"><?php _e( 'Comments are closed.', 'fukasawa' ); ?></p>
-		
-		</div>
-		
-	</div>
-	
-	<?php
 endif;
 
 if ( comments_open() ) echo '<div class="respond-container">';

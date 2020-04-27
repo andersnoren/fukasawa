@@ -7,7 +7,7 @@ class fukasawa_dribbble_widget extends WP_Widget {
 	function __construct() {
         $widget_ops = array( 
 			'classname' 	=> 'fukasawa_dribbble_widget', 
-			'description' 	=> __('Displays your latest Dribbble photos.', 'fukasawa') 
+			'description' 	=> __( 'Displays your latest Dribbble photos.', 'fukasawa' ) 
 		);
         parent::__construct( 'fukasawa_dribbble_widget', __( 'Dribbble Widget', 'fukasawa' ), $widget_ops );
     }
@@ -16,52 +16,52 @@ class fukasawa_dribbble_widget extends WP_Widget {
 	
 		extract( $args );
 		
-		$widget_title = apply_filters( 'widget_title', $instance['widget_title'] );
-		$dribbble_username = $instance['dribbble_username'];
-		$dribbble_number = $instance['dribbble_number'];
+		$widget_title = apply_filters( 'widget_title', isset( $instance['widget_title'] ) ? $instance['widget_title'] : '' );
+		$dribbble_username = isset( $instance['dribbble_username'] ) ? $instance['dribbble_username'] : '';
+		$dribbble_number = isset( $instance['dribbble_number'] ) ? $instance['dribbble_number'] : 6;
 		$unique_id = $args['widget_id'];
 		
 		echo $before_widget;
 		
 		if ( ! empty( $widget_title ) ) {
-		
 			echo $before_title . $widget_title . $after_title;
-			
 		}
 		
-			$rss = fetch_feed( "http://dribbble.com/players/$dribbble_username/shots.rss" );
+		$rss = fetch_feed( "http://dribbble.com/players/$dribbble_username/shots.rss" );
 
-			add_filter( 'wp_feed_cache_transient_lifetime', create_function( '$a', 'return 1800;' ) );
+		add_filter( 'wp_feed_cache_transient_lifetime', create_function( '$a', 'return 1800;' ) );
 
-			if ( ! is_wp_error( $rss ) ) {
-				$items = $rss->get_items( 0, $rss->get_item_quantity( $dribbble_number ) ); 
-			}
-		
-			if ( ! empty( $items ) ) : ?>
-			
-				<div class="dribbble-container">
-						
-					<?php 
-					foreach ( $items as $item ) :
-						$title = $item->get_title();
-						$link = $item->get_permalink();
-						$description = $item->get_description();
-						
-						preg_match("/src=\"(http.*(jpg|jpeg|gif|png))/", $description, $image_url);
-						$image = $image_url[1]; ?>
-																												
-							<a href="<?php echo $link; ?>" title="<?php echo $title;?>" class="dribbble-shot"><img src="<?php echo $image; ?>" alt="<?php echo $title;?>"/></a> 
-																																			 	
-					<?php endforeach; ?>
-									
-				</div>
-							
-				<?php 
-			endif;
+		if ( ! is_wp_error( $rss ) ) {
+			$items = $rss->get_items( 0, $rss->get_item_quantity( $dribbble_number ) ); 
+		}
 	
-			echo $after_widget;
+		if ( ! empty( $items ) ) : ?>
 		
-		}
+			<div class="dribbble-container">
+					
+				<?php 
+				foreach ( $items as $item ) :
+					$title = $item->get_title();
+					$link = $item->get_permalink();
+					$description = $item->get_description();
+					
+					preg_match( "/src=\"(http.*(jpg|jpeg|gif|png))/", $description, $image_url );
+					$image = $image_url[1]; ?>
+																											
+					<a href="<?php echo esc_url( $link ); ?>" class="dribbble-shot">
+						<img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>" />
+					</a>
+
+				<?php endforeach; ?>
+								
+			</div>
+						
+			<?php 
+		endif;
+
+		echo $after_widget;
+	
+	}
 	
 	
 	function update( $new_instance, $old_instance ) {

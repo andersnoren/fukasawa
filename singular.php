@@ -3,14 +3,11 @@
 <div class="content thin">
 											        
 	<?php 
-	
 	if ( have_posts() ) : 
-		
 		while ( have_posts() ) : the_post(); 
-		
 			?>
 			
-			<div id="post-<?php the_ID(); ?>" <?php post_class( 'post single' ); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class( 'entry post single' ); ?>>
 			
 				<?php
 				
@@ -22,7 +19,7 @@
 					
 						if ( $pos = strpos( $post->post_content, '<!--more-->' ) ) : ?>
 				
-							<div class="featured-media">
+							<figure class="featured-media clear">
 							
 								<?php
 										
@@ -39,28 +36,22 @@
 								
 								?>
 							
-							</div><!-- .featured-media -->
+							</figure><!-- .featured-media -->
 						
 							<?php
 						endif;
 						
 					elseif ( $post_format == 'gallery' ) : ?>
 					
-						<div class="featured-media">	
-			
+						<figure class="featured-media clear">
 							<?php fukasawa_flexslider( 'post-image' ); ?>
-							
-							<div class="clear"></div>
-							
-						</div><!-- .featured-media -->
+						</figure><!-- .featured-media -->
 									
 					<?php elseif ( has_post_thumbnail() ) : ?>
 							
-						<div class="featured-media">
-				
+						<figure class="featured-media clear">
 							<?php the_post_thumbnail( 'post-image' ); ?>
-							
-						</div><!-- .featured-media -->
+						</figure><!-- .featured-media -->
 							
 					<?php endif; ?>
 
@@ -68,13 +59,16 @@
 				
 				<div class="post-inner">
 					
-					<div class="post-header">
-														
-						<?php the_title( '<h1 class="post-title">', '</h1>' ); ?>
-																
-					</div><!-- .post-header -->
+					<header class="post-header">
+
+						<?php 
+						$post_title_elem = is_front_page() ? 'h2' : 'h1';
+						the_title( '<' . $post_title_elem . ' class="post-title">', '</' . $post_title_elem . '>' ); 
+						?>
+
+					</header><!-- .post-header -->
 						
-					<div class="post-content">
+					<div class="post-content entry-content">
 					
 						<?php 
 						if ( $post_format == 'video' && isset( $content_parts ) ) { 
@@ -84,29 +78,35 @@
 						} else {
 							the_content();
 						}
+
+						if ( ! is_single() ) {
+							edit_post_link( __( 'Edit post', 'fukasawa' ), '<p>', '</p>' );
+						}
+
 						?>
 					
 					</div><!-- .post-content -->
-					
-					<div class="clear"></div>
 
-					<?php 
+					<?php
 
-					$args = array(
-						'before'           => '<div class="clear"></div><p class="page-links"><span class="title">' . __( 'Pages:','fukasawa' ) . '</span>',
+					// Archive template output
+					if ( is_page_template( 'template-archive.php' ) ) {
+						get_template_part( 'template-parts/archive-list' );
+					}
+				
+					$link_pages = wp_link_pages( $args = array(
+						'before'           => '<p class="page-links"><span class="title">' . __( 'Pages:','fukasawa' ) . '</span>',
 						'after'            => '</p>',
 						'link_before'      => '<span>',
 						'link_after'       => '</span>',
 						'separator'        => '',
 						'pagelink'         => '%',
 						'echo'             => false
-					);
-				
-					$link_pages = wp_link_pages( $args ); 
+					) ); 
 					
 					if ( is_single() || $link_pages ) : ?>
 					
-						<div class="post-meta-bottom">
+						<div class="post-meta-bottom clear">
 
 							<?php 
 							
@@ -130,8 +130,6 @@
 
 							<?php endif; ?>
 							
-							<div class="clear"></div>
-							
 						</div><!-- .post-meta-bottom -->
 
 					<?php endif; ?>
@@ -140,7 +138,7 @@
 
 				<?php if ( is_single() ) : ?>
 				
-					<div class="post-navigation">
+					<div class="post-navigation clear">
 
 						<?php
 
@@ -148,46 +146,33 @@
 						$next_post = get_next_post();
 
 						if ( $prev_post ) : ?>
-						
 							<a class="post-nav-prev" href="<?php echo get_permalink( $prev_post->ID ); ?>">
 								<p>&larr; <?php _e( 'Previous post', 'fukasawa' ); ?></p>
 							</a>
-
-							<?php 
-						endif;
+						<?php endif; ?>
 						
-						if ( $next_post ) : ?>
-							
+						<?php if ( $next_post ) : ?>
 							<a class="post-nav-next" href="<?php echo get_permalink( $next_post->ID ); ?>">					
 								<p><?php _e( 'Next post', 'fukasawa' ); ?> &rarr;</p>
 							</a>
-					
-							<?php 
-						endif; 
-						?>
-						
-						<div class="clear"></div>
+						<?php endif; ?>
 					
 					</div><!-- .post-navigation -->
 
 				<?php endif;
-
-				$post_type = get_post_type();
 				
-				// Output comments wrapper if it's a post, or if comments are open, or if there's a comment number – and check for password
-				if ( ( $post_type == 'post' || comments_open() || get_comments_number() ) && ! post_password_required() ) : ?>
-									
-					<?php comments_template( '', true ); ?>
-
-				<?php endif; ?>
+				// Output comments wrapper if comments are open, or if there's a comment number – and check for password
+				if ( ( comments_open() || get_comments_number() ) && ! post_password_required() ) {
+					comments_template( '', true );
+				}
+				
+				?>
 			
-			</div><!-- .post -->
+			</article><!-- .post -->
 																
 			<?php 
 		endwhile; 
-
-	endif; 
-	
+	endif;
 	?>
 
 </div><!-- .content -->

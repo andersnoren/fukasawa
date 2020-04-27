@@ -15,8 +15,8 @@ class fukasawa_recent_posts extends WP_Widget {
 		// Outputs the content of the widget
 		extract( $args ); // Make before_widget, etc available.
 		
-		$widget_title = apply_filters( 'widget_title', $instance['widget_title'] );
-		$number_of_posts = $instance['number_of_posts'];
+		$widget_title = apply_filters( 'widget_title', isset( $instance['widget_title'] ) ? $instance['widget_title'] : '' );
+		$number_of_posts = isset( $instance['number_of_posts'] ) ? $instance['number_of_posts'] : 5;
 		
 		echo $before_widget;
 		
@@ -54,7 +54,7 @@ class fukasawa_recent_posts extends WP_Widget {
 			
 						<li>
 						
-							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+							<a href="<?php the_permalink(); ?>" class="clear">
 									
 								<div class="post-icon">
 								
@@ -100,13 +100,9 @@ class fukasawa_recent_posts extends WP_Widget {
 								</div>
 								
 								<div class="inner">
-												
 									<p class="title"><?php the_title(); ?></p>
 									<p class="meta"><?php the_time( get_option( 'date_format' ) ); ?></p>
-								
 								</div>
-								
-								<div class="clear"></div>
 													
 							</a>
 							

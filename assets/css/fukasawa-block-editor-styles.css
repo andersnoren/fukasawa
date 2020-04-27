@@ -1,33 +1,21 @@
-/*---------------------------------------------------------------------------------
-	Gutenberg editor styles for Fukasawa
----------------------------------------------------------------------------------*/
+/* --------------------------------------------------------------------------------
+	Block Editor Styles for Fukasawa
+----------------------------------------------------------------------------------- */
 
 
-/* Structure ---------------------------------------------- */
-
+/* Structure --------------------------------- */
 
 .block-editor__container .editor-styles-wrapper {
 	font-size: 18px;
 }
 
-.editor-rich-text__tinymce {
+.editor-styles-wrapper > * {
 	color: #333;
 	font-family: 'Lato', sans-serif;
 }
 
-.editor-styles-wrapper > * {
-	font-family: 'Lato', sans-serif;
-	-webkit-font-smoothing: antialiased;
-}
-
-.editor-rich-text__tinymce * {
-	font-family: inherit !important;
-}
-
-.editor-styles-wrapper .editor-default-block-appender, 
-.editor-styles-wrapper .editor-block-list__block,
-.editor-styles-wrapper .editor-post-title__block {
-    max-width: 650px;
+.wp-block {
+    max-width: 620px;
 }
 
 .editor-styles-wrapper .editor-block-list__block[data-align="full"] {
@@ -48,8 +36,7 @@
 	line-height: 1.6;
 }
 
-
-/* Typography --------------------------------------------- */
+/* Typography -------------------------------- */
 
 .editor-post-title__block .editor-post-title__input {
 	color: #222;
@@ -111,8 +98,7 @@ p.has-drop-cap:not(:focus):first-letter {
 	font-weight: 400;
 }
 
-
-/* Monospace -------------------------------------- */
+/* Monospace --------------------------------- */
 
 .editor-styles-wrapper code, 
 .editor-styles-wrapper kbd, 
@@ -137,9 +123,7 @@ pre {
 	padding: 1em;
 }
 
-
-/* Custom Text Sizes -------------------------------------- */
-
+/* Custom Text Sizes ------------------------- */
 
 .editor-styles-wrapper p.has-large-font-size,
 .editor-styles-wrapper p.has-large-font-size.mce-content-body,
@@ -148,8 +132,7 @@ pre {
 	line-height: 1.5;
 }
 
-
-/* Post Media --------------------------------------------- */
+/* Post Media -------------------------------- */
 
 figure {
 	margin: 0;
@@ -183,8 +166,7 @@ figure {
 	font-weight: 400;
 }
 
-
-/* Block: More ---------------------------------------- */
+/* Block: More ------------------------------- */
 
 .wp-block-more input[type=text] {
 	color: #666;
@@ -193,8 +175,7 @@ figure {
 	font-weight: 800;
 }
 
-/* Block: Table ---------------------------------------- */
-
+/* Block: Table ------------------------------ */
 
 table.wp-block-table {
 	border: none;
@@ -243,12 +224,12 @@ table.wp-block-table thead + tbody {
 .wp-block-table tbody > tr:nth-child(odd) > td { background: rgba( 0, 0, 0, 0.05 ); }
 
 
-/* Block: Separator ---------------------------------------- */
+/* Block: Separator -------------------------- */
 
 
 hr.wp-block-separator {
 	border: none !important;
-	color: #888;
+	color: #767676;
 	margin: 2em auto;
 }
 
@@ -269,9 +250,7 @@ hr.wp-block-separator {
 	color: inherit;
 }
 
-
-/* Block: File --------------------------------------------- */
-
+/* Block: File ------------------------------- */
 
 .wp-block-file {
 	background: rgba( 0, 0, 0, 0.05 );
@@ -298,8 +277,7 @@ hr.wp-block-separator {
 	padding: .8em 1.4em;
 }
 
-
-/* Block: Quote -------------------------------------------- */
+/* Block: Quote ------------------------------ */
 
 blockquote {
 	margin: 0;
@@ -371,8 +349,7 @@ cite:before,
 	font-size: 1.5em;
 }
 
-
-/* Block: Pull Quote ---------------------------------------- */
+/* Block: Pull Quote ------------------------- */
 
 .wp-block-pullquote {
 	border: none;
@@ -393,16 +370,14 @@ cite:before,
 	line-height: 1.45;
 }
 
-
-/* Block: Cover Image ---------------------------------------- */
+/* Block: Cover Image ------------------------ */
 
 .editor-styles-wrapper .wp-block-cover p {
 	font-size: 2em;
-	font-weight: 300;
+	font-weight: 400;
 }
 
-
-/* Block: Verse ------------------------------------------- */
+/* Block: Verse ------------------------------ */
 
 .wp-block-verse pre, 
 pre.wp-block-verse {
@@ -410,8 +385,7 @@ pre.wp-block-verse {
 	font-size: 0.7em;
 }
 
-
-/* Block: Button ------------------------------------------- */
+/* Block: Button ----------------------------- */
 
 .wp-block-button .wp-block-button__link,
 .wp-block-button .wp-block-button__link.mce-content-body {

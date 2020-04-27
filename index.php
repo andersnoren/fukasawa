@@ -27,9 +27,9 @@
 
 		<div class="page-title">
 			
-			<div class="section-inner">
+			<div class="section-inner clear">
 	
-				<h4 class="archive-title">
+				<h1 class="archive-title">
 					<?php 
 					echo $archive_title;
 					
@@ -37,10 +37,8 @@
 						echo '<span>' . $archive_subtitle . '</span>';
 					} 
 					?>
-
-					<div class="clear"></div>
 					
-				</h4>
+				</h1>
 
 				<?php if ( $archive_description ) : ?>
 
@@ -59,32 +57,19 @@
 	<?php if ( have_posts() ) : ?>
 
 		<div class="posts" id="posts">
-
-			<div class="grid-sizer"></div>
 				
 			<?php 
-			while ( have_posts() ) : the_post();
 			
-				get_template_part( 'content', get_post_format() );
-				
+			while ( have_posts() ) : the_post();
+				$template_part_name = get_post_type() == 'post' ? get_post_format() : get_post_type();
+				get_template_part( 'content', $template_part_name );
 			endwhile; 
+
 			?>
 		
 		</div><!-- .posts -->
 
-		<?php if ( $wp_query->max_num_pages > 1 ) : ?>
-			
-			<div class="archive-nav">
-					
-				<?php echo get_next_posts_link( __( 'Older posts', 'fukasawa' ) . ' &rarr;' ); ?>
-					
-				<?php echo get_previous_posts_link( '&larr; ' . __( 'Newer posts', 'fukasawa' ) ); ?>
-				
-				<div class="clear"></div>
-							
-			</div><!-- .archive-nav -->
-							
-		<?php endif; ?>
+		<?php get_template_part( 'pagination' ); ?>
 
 	<?php elseif ( is_search() ) : ?>
 
