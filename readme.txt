@@ -64,6 +64,10 @@ The rest of the content...
 
 == Changelog ==
 
+Version 2.0.2 (2020-04-29)
+-------------------------
+- Fixed list styles being unintentionally added to some elements (a story in two acts).
+
 Version 2.0.1 (2020-04-29)
 -------------------------
 - Fixed lists missing a list style (bullets/numbers).
