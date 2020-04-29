@@ -64,6 +64,10 @@ The rest of the content...
 
 == Changelog ==
 
+Version 2.0.1 (2020-04-29)
+-------------------------
+- Fixed lists missing a list style (bullets/numbers).
+
 Version 2.0.0 (2020-04-27)
 -------------------------
 - Updated the theme folder structure with an `/assets/` folder, and moved assets to it.
