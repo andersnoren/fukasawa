@@ -64,6 +64,10 @@ The rest of the content...
 
 == Changelog ==
 
+Version 2.0.3 (2020-05-04)
+-------------------------
+- Fixed the author name being misaligned on author archives.
+
 Version 2.0.2 (2020-04-29)
 -------------------------
 - Fixed list styles being unintentionally added to some elements (a story in two acts).

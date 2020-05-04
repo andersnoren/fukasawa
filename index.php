@@ -34,7 +34,7 @@
 					echo $archive_title;
 					
 					if ( $archive_subtitle ) {
-						echo '<span>' . $archive_subtitle . '</span>';
+						echo '<span class="archive-subtitle">' . $archive_subtitle . '</span>';
 					} 
 					?>
 					
