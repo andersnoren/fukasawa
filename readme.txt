@@ -64,6 +64,10 @@ The rest of the content...
 
 == Changelog ==
 
+Version 2.0.4 (2020-05-26)
+-------------------------
+- Updated the CSS targeting of the `post` element on archive pages to play nicer with custom post types.
+
 Version 2.0.3 (2020-05-04)
 -------------------------
 - Fixed the author name being misaligned on author archives.
