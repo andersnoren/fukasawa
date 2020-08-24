@@ -2,7 +2,8 @@
 Contributors: Anlino
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=anders%40andersnoren%2ese&lc=US&item_name=Free%20WordPress%20Themes%20from%20Anders%20Noren&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Requires at least: 4.5
-Tested up to: 5.4
+Requires PHP: 5.6
+Tested up to: 5.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -63,6 +64,12 @@ The rest of the content...
 
 
 == Changelog ==
+
+Version 2.0.5 (2020-08-23)
+-------------------------
+- Removed the Dribbble widget, since Dribbble no longer supports the type of feed used to retrieve images.
+- Removing the widget also removed the use of `create_function()`, which is deprecated starting in PHP 7.2.
+- Added "Tested up to" and "Requires PHP" to style.css, and added "Requires PHP" to readme.txt.
 
 Version 2.0.4 (2020-05-26)
 -------------------------

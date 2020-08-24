@@ -5,9 +5,7 @@
    THEME SETUP
    --------------------------------------------------------------------------------------------- */
 
-
 if ( ! function_exists( 'fukasawa_setup' ) ) {
-
 	function fukasawa_setup() {
 		
 		// Automatic feed
@@ -52,16 +50,8 @@ if ( ! function_exists( 'fukasawa_setup' ) ) {
 		// Make the theme translation ready
 		load_theme_textdomain( 'fukasawa', get_template_directory() . '/languages' );
 		
-		$locale = get_locale();
-		$locale_file = get_template_directory() . "/languages/$locale.php";
-
-		if ( is_readable( $locale_file ) ) {
-			require_once( $locale_file );
-		}
-		
 	}
 	add_action( 'after_setup_theme', 'fukasawa_setup' );
-
 }
 
 
@@ -201,7 +191,6 @@ if ( ! function_exists( 'fukasawa_sidebar_registration' ) ) {
    --------------------------------------------------------------------------------------------- */
 
 
-require_once( get_template_directory() . '/widgets/dribbble-widget.php' );
 require_once( get_template_directory() . '/widgets/flickr-widget.php' );
 require_once( get_template_directory() . '/widgets/recent-comments.php' );
 require_once( get_template_directory() . '/widgets/recent-posts.php' );
