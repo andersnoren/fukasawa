@@ -5,7 +5,7 @@
    THEME SETUP
    --------------------------------------------------------------------------------------------- */
 
-if ( ! function_exists( 'fukasawa_setup' ) ) {
+if ( ! function_exists( 'fukasawa_setup' ) ) :
 	function fukasawa_setup() {
 		
 		// Automatic feed
@@ -52,7 +52,7 @@ if ( ! function_exists( 'fukasawa_setup' ) ) {
 		
 	}
 	add_action( 'after_setup_theme', 'fukasawa_setup' );
-}
+endif;
 
 
 /*	-----------------------------------------------------------------------------------------------
@@ -68,20 +68,20 @@ require get_template_directory() . '/inc/classes/class-fukasawa-customize.php';
    GET THEME VERSION
    --------------------------------------------------------------------------------------------- */
 
-
-if ( ! function_exists( 'fukasawa_get_version' ) ) {
+if ( ! function_exists( 'fukasawa_get_version' ) ) :
 	function fukasawa_get_version() {
+
 		return wp_get_theme( 'fukasawa' )->theme_version;
+
 	}
-}
+endif;
 
 
 /* ---------------------------------------------------------------------------------------------
    ENQUEUE SCRIPTS
    --------------------------------------------------------------------------------------------- */
 
-
-if ( ! function_exists( 'fukasawa_load_javascript_files' ) ) {
+if ( ! function_exists( 'fukasawa_load_javascript_files' ) ) :
 	function fukasawa_load_javascript_files() {
 
 		wp_register_script( 'fukasawa_flexslider', get_template_directory_uri() . '/assets/js/flexslider.js', '2.7.0', true );
@@ -89,38 +89,27 @@ if ( ! function_exists( 'fukasawa_load_javascript_files' ) ) {
 		wp_enqueue_script( 'fukasawa_global', get_template_directory_uri() . '/assets/js/global.js', array( 'jquery', 'masonry', 'imagesloaded', 'fukasawa_flexslider' ), fukasawa_get_version(), true );
 
 		if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
+
 	}
 	add_action( 'wp_enqueue_scripts', 'fukasawa_load_javascript_files' );
-}
+endif;
 
 
 /* ---------------------------------------------------------------------------------------------
    ENQUEUE STYLES
    --------------------------------------------------------------------------------------------- */
 
-
-if ( ! function_exists( 'fukasawa_load_style' ) ) {
-
+if ( ! function_exists( 'fukasawa_load_style' ) ) :
 	function fukasawa_load_style() {
 
 		if ( ! is_admin() ) {
 
 			$dependencies = array();
 
-			/**
-			 * Translators: If there are characters in your language that are not
-			 * supported by the theme fonts, translate this to 'off'. Do not translate
-			 * into your own language.
-			 */
-			$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
-
-			if ( 'off' !== $google_fonts ) {
-				wp_register_style( 'fukasawa_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic' );
-				$dependencies[] = 'fukasawa_googleFonts';
-			}
+			wp_register_style( 'fukasawa_googleFonts', get_stylesheet_directory_uri() . '/assets/css/fonts.css' );
+			$dependencies[] = 'fukasawa_googleFonts';
 
 			wp_register_style( 'fukasawa_genericons', get_theme_file_uri( '/assets/fonts/genericons/genericons.css' ) );
-
 			$dependencies[] = 'fukasawa_genericons';
 
 			wp_enqueue_style( 'fukasawa_style', get_stylesheet_uri(), $dependencies, fukasawa_get_version() );
@@ -128,46 +117,28 @@ if ( ! function_exists( 'fukasawa_load_style' ) ) {
 
 	}
 	add_action( 'wp_print_styles', 'fukasawa_load_style' );
-
-}
+endif;
 
 
 /* ---------------------------------------------------------------------------------------------
    ADD EDITOR STYLES
    --------------------------------------------------------------------------------------------- */
 
-
-if ( ! function_exists( 'fukasawa_add_editor_styles' ) ) {
-
+if ( ! function_exists( 'fukasawa_add_editor_styles' ) ) :
 	function fukasawa_add_editor_styles() {
 
-		add_editor_style( 'assets/css/fukasawa-block-editor-styles.css' );
-
-		/**
-		 * Translators: If there are characters in your language that are not
-		 * supported by the theme fonts, translate this to 'off'. Do not translate
-		 * into your own language.
-		 */
-		$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
-
-		if ( 'off' !== $google_fonts ) {
-			$font_url = '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic';
-			add_editor_style( str_replace( ',', '%2C', $font_url ) );
-		}
+		add_editor_style( array( 'assets/css/fukasawa-block-editor-styles.css', 'assets/css/fonts.css' ) );
 		
 	}
 	add_action( 'init', 'fukasawa_add_editor_styles' );
-
-}
+endif;
 
 
 /* ---------------------------------------------------------------------------------------------
    REGISTER WIDGET AREAS
    --------------------------------------------------------------------------------------------- */
 
-
-if ( ! function_exists( 'fukasawa_sidebar_registration' ) ) {
-
+if ( ! function_exists( 'fukasawa_sidebar_registration' ) ) :
 	function fukasawa_sidebar_registration() {
 
 		register_sidebar( array(
@@ -182,14 +153,12 @@ if ( ! function_exists( 'fukasawa_sidebar_registration' ) ) {
 
 	}
 	add_action( 'widgets_init', 'fukasawa_sidebar_registration' ); 
-
-}
+endif;
 
 
 /* ---------------------------------------------------------------------------------------------
    ADD THEME WIDGETS
    --------------------------------------------------------------------------------------------- */
-
 
 require_once( get_template_directory() . '/widgets/flickr-widget.php' );
 require_once( get_template_directory() . '/widgets/recent-comments.php' );
@@ -580,26 +549,14 @@ if ( ! function_exists( 'fukasawa_block_editor_styles' ) ) :
 
 		$dependencies = array();
 
-		/**
-		 * Translators: If there are characters in your language that are not
-		 * supported by the theme fonts, translate this to 'off'. Do not translate
-		 * into your own language.
-		 */
-		$google_fonts = _x( 'on', 'Google Fonts: on or off', 'fukasawa' );
-
-		if ( 'off' !== $google_fonts ) {
-
-			// Register Google Fonts
-			wp_register_style( 'fukasawa-block-editor-styles-font', '//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic', false, 1.0, 'all' );
-			$dependencies[] = 'fukasawa-block-editor-styles-font';
-
-		}
+		wp_register_style( 'fukasawa-block-editor-styles-font', get_theme_file_uri( '/assets/css/fonts.css' ) );
+		$dependencies[] = 'fukasawa-block-editor-styles-font';
 
 		wp_register_style( 'fukasawa-block-editor-styles-genericons', get_theme_file_uri( '/assets/fonts/genericons/genericons.css' ) );
 		$dependencies[] = 'fukasawa-block-editor-styles-genericons';
 
 		// Enqueue the editor styles
-		wp_enqueue_style( 'fukasawa-block-editor-styles', get_theme_file_uri( '/assets/css/fukasawa-block-editor-styles.css' ), $dependencies, '1.0', 'all' );
+		wp_enqueue_style( 'fukasawa-block-editor-styles', get_theme_file_uri( '/assets/css/fukasawa-block-editor-styles.css' ), $dependencies, fukasawa_get_version(), 'all' );
 
 	}
 	add_action( 'enqueue_block_editor_assets', 'fukasawa_block_editor_styles', 1 );
