@@ -106,7 +106,7 @@ if ( ! function_exists( 'fukasawa_load_style' ) ) :
 
 			$dependencies = array();
 
-			wp_register_style( 'fukasawa_googleFonts', get_stylesheet_directory_uri() . '/assets/css/fonts.css' );
+			wp_register_style( 'fukasawa_googleFonts', get_theme_file_uri( '/assets/css/fonts.css' ) );
 			$dependencies[] = 'fukasawa_googleFonts';
 
 			wp_register_style( 'fukasawa_genericons', get_theme_file_uri( '/assets/fonts/genericons/genericons.css' ) );
