@@ -2,7 +2,7 @@
 
 Fukasawa is a minimal masonry style blog theme for photographers and collectors. It features responsive & retina-ready design, Block Editor support, support for the image, gallery and video post formats, four custom widgets, an archive page template, a gallery slideshow, custom accent color support, custom logo support, editor styles, and much more.
 
-![Fukasawa](https://github.com/andersnoren/fukasawa/blob/main/screenshot.png)
+![Fukasawa](https://github.com/andersnoren/fukasawa/blob/master/screenshot.jpg)
 
 You can download the latest stable release of Fukasawa [from WordPress.org](https://wordpress.org/themes/fukasawa/).
 
