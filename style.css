@@ -3,15 +3,15 @@
 	Theme Name: Fukasawa
     Text Domain: fukasawa
 	Theme URI: https://andersnoren.se/teman/fukasawa-wordpress-theme/
-	Version: 2.1.2
-	Description: Fukasawa is a minimal masonry style blog theme for photographers and collectors. It features responsive & retina-ready design, Block Editor support, support for the image, gallery and video post formats, four custom widgets, an archive page template, a gallery slideshow, custom accent color support, custom logo support, editor styles, and much more. Demo: https://andersnoren.se/themes/fukasawa/
+	Version: 2.1.3
+	Description: Fukasawa is a minimal masonry style blog theme for photographers and collectors. It features responsive & retina-ready design, Block Editor support, support for the image, gallery and video post formats, two custom widgets, an archive page template, a gallery slideshow, custom accent color support, custom logo support, editor styles, and much more. Demo: https://andersnoren.se/themes/fukasawa/
 	Tags: blog, three-columns, left-sidebar, custom-colors, custom-menu, editor-style, featured-images, post-formats, sticky-post, theme-options, threaded-comments, translation-ready, portfolio, grid-layout, block-styles, wide-blocks
 	Author: Anders Norén
 	Author URI: https://andersnoren.se
 	License: GNU General Public License version 2.0
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	Requires PHP: 5.6
-	Tested up to: 6.0
+	Tested up to: 6.7
 	
 	All files, unless otherwise stated, are released under the GNU General Public License
 	version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -522,25 +522,6 @@ body a,
 #wp-calendar tfoot a:hover,
 .wp-calendar-nav a:hover {
 	text-decoration: underline;
-}
-
-/* Widget: Flickr ---------------------------- */
-
-.flickr_badge_image {
-	display: inline-block;
-	width: 55px;
-	height: auto;
-	margin: 3px 9px 3px 0;
-}
-
-.flickr_badge_image a,
-.flickr_badge_image img { 
-	display: block; 
-	border-radius: 3px;
-}
-
-.flickr_badge_image a:hover {
-	opacity: 0.7;
 }
 
 /* Widget: Recent Posts/Comments ------------- */

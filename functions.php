@@ -47,9 +47,6 @@ if ( ! function_exists( 'fukasawa_setup' ) ) :
 		// Add nav menu
 		register_nav_menu( 'primary', __( 'Primary Menu', 'fukasawa' ) );
 		
-		// Make the theme translation ready
-		load_theme_textdomain( 'fukasawa', get_template_directory() . '/languages' );
-		
 	}
 	add_action( 'after_setup_theme', 'fukasawa_setup' );
 endif;
@@ -160,9 +157,13 @@ endif;
    ADD THEME WIDGETS
    --------------------------------------------------------------------------------------------- */
 
-require_once( get_template_directory() . '/widgets/flickr-widget.php' );
-require_once( get_template_directory() . '/widgets/recent-comments.php' );
-require_once( get_template_directory() . '/widgets/recent-posts.php' );
+if ( ! function_exists( 'fukasawa_widget_registration' ) ) :
+	function fukasawa_widget_registration() {
+		require_once( get_template_directory() . '/widgets/recent-comments.php' );
+		require_once( get_template_directory() . '/widgets/recent-posts.php' );
+	}
+	add_action( 'widgets_init', 'fukasawa_widget_registration' ); 
+endif;
 
 
 /* ---------------------------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 === Fukasawa ===
 Contributors: Anlino
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=anders%40andersnoren%2ese&lc=US&item_name=Free%20WordPress%20Themes%20from%20Anders%20Noren&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
-Requires at least: 4.5
+Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 6.0
+Tested up to: 6.7
 Stable tag: trunk
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -64,6 +64,15 @@ The rest of the content...
 
 
 == Changelog ==
+
+Version 2.1.3 (2025-02-23)
+-------------------------
+- Wrapped widget registration in `widgets_init` action, fixing notice for `_load_textdomain_just_in_time()`, added in 6.7.
+- Removed `load_theme_textdomain()` call, since it's no longer required for WordPress.org themes.
+- Removed Flickr widget, since the API it was using is no longer available.
+- Updated theme description to reflect the removed Flickr widget.
+- Bumped "Requires at least" to 4.6.
+- Bumped "Tested up to" to 6.7.
 
 Version 2.1.1 (2022-06-30)
 -------------------------
